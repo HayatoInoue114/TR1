@@ -17,7 +17,7 @@ Bezier::Bezier()
 		homing[i].Counter2 = 0;
 		homing[i].DivNum = 0;
 		homing[i].P0[0] = 0;
-		homing[i].P0[1] = 0;
+		homing[i].P0[1] = 0; 
 		homing[i].P1[0] = 0;
 		homing[i].P1[1] = 0;
 		homing[i].P2[0] = 0;
@@ -288,7 +288,7 @@ void Bezier::Move() {
 
 void Bezier::Draw() {
 	if (!isLoad) {
-		textureHandle = Novice::LoadTexture("./Resource./hotMilk.png");
+		textureHandle = Novice::LoadTexture("./Resource./ball.png");
 		
 	}
 
