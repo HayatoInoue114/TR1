@@ -1,7 +1,7 @@
 #include "MT.h"
 
 #define HOMINGMAX 10//ホーミング総数
-#define HOMINGTRAILMAX 300//残像ホーミング総数
+#define HOMINGTRAILMAX 3000//残像ホーミング総数
 
 const int kWindowWidth = 1280;
 const int kWindowHeight = 720;
@@ -10,41 +10,46 @@ class Bezier
 {
 public:
 	Bezier();
+	~Bezier();
 	void Init();
 	void Update();
 	void Move();
 	void Draw();
 
 private:
-	struct Player {//自機構造体
-		float x, y;//自機座標
+	struct Player {
+		float x, y;
 	};
 
 	struct homing_t
 	{
-		float x;//ホーミング座標
+		//ホーミング座標
+		float x;
 		float y;
 		float u;
-		int Counter;//ベジェ曲線用
-		int Counter2;//ベジェ曲線用
-		int DivNum;//ベジェ曲線用
-		float P0[2];// 制御点
-		float P1[2];// 制御点
-		float P2[2];// 制御点
-		int f;//レーザーの有無
+
+		//ベジェ曲線用
+		int Counter;
+		int Counter2;
+		int DivNum;
+
+		// 制御点
+		float P0[2];
+		float P1[2];
+		float P2[2];
+		bool isLaserActive;//レーザーの有無
 	};
 
 	//構造体宣言
 	Player player;
-	Player zhomi[HOMINGTRAILMAX];
-	bool isZHomi[HOMINGTRAILMAX];
+	Player homingTrail[HOMINGTRAILMAX];
+	bool isHomingTrail[HOMINGTRAILMAX];
 	homing_t homing[HOMINGMAX];
 
 	//制御点
-	double P01[2], P12[2];
-	double P02[2];
+	double P01[2], P12[2], P02[2];
 	//
-	int i, j, DivNum;
+	int DivNum;
 
 	int textureHandle;
 

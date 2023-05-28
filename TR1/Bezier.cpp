@@ -8,7 +8,7 @@ Bezier::Bezier()
 	player.y = 400;
 
 	//変数初期化
-	for (i = 0; i < HOMINGMAX; i++)
+	for (int i = 0; i < HOMINGMAX; i++)
 	{
 		homing[i].x = 0;
 		homing[i].y = 0;
@@ -22,7 +22,7 @@ Bezier::Bezier()
 		homing[i].P1[1] = 0;
 		homing[i].P2[0] = 0;
 		homing[i].P2[1] = 0;
-		homing[i].f = 0;
+		homing[i].isLaserActive = 0;
 	}
 	DivNum = 50;
 	isLoad = false;
@@ -32,8 +32,8 @@ Bezier::Bezier()
 	countNum = 1;
 	preKey = false;
 	for (int i = 0; i < HOMINGTRAILMAX; i++) {
-		zhomi[i] = {};
-		isZHomi[i] = false;
+		homingTrail[i] = {};
+		isHomingTrail[i] = false;
 	}
 	isSecond = false;
 	isMove = false;
@@ -45,13 +45,17 @@ Bezier::Bezier()
 	
 }
 
+Bezier::~Bezier() {
+
+}
+
 void Bezier::Init() {
 	//自機座標
 	player.x = 400;
 	player.y = 400;
 
 	//変数初期化
-	for (i = 0; i < HOMINGMAX; i++)
+	for (int i = 0; i < HOMINGMAX; i++)
 	{
 		homing[i].x = 0;
 		homing[i].y = 0;
@@ -65,9 +69,9 @@ void Bezier::Init() {
 		homing[i].P1[1] = 0;
 		homing[i].P2[0] = 0;
 		homing[i].P2[1] = 0;
-		homing[i].f = 0;
+		homing[i].isLaserActive = false;
 	}
-	DivNum = 50;
+	DivNum = 100;
 	isLoad = false;
 	block1.pos = { 300,600 };
 	block1.size = { 600,50 };
@@ -85,9 +89,9 @@ void Bezier::Move() {
 
 	for (int i = 0; i < HOMINGMAX; i++)
 	{//レーザー出現処理
-		if (Novice::CheckHitKey(DIK_Z))
+		if (Novice::CheckHitKey(DIK_SPACE))
 		{
-			if (homing[i].f == 0)
+			if (!homing[i].isLaserActive)
 			{
 				homing[i].x = 0;
 				homing[i].y = 0;
@@ -106,7 +110,7 @@ void Bezier::Move() {
 				homing[i].P1[1] = player.y;
 				homing[i].P2[0] = player.x;
 				homing[i].P2[1] = player.y + 5;
-				homing[i].f = 1;
+				homing[i].isLaserActive = true;
 
 
 			}
@@ -115,16 +119,16 @@ void Bezier::Move() {
 
 	}
 
-	// 軌跡表示
+	// 軌跡
 	for (int i = 0; i < HOMINGMAX; i++)
 	{
-		if (homing[i].f == 0) continue;
-		if (homing[i].f == 1)
+		if (!homing[i].isLaserActive) continue;
+		if (homing[i].isLaserActive)
 		{
 
-			// ベジェ曲線の計算をしているところ
-			for (j = 0; j < DivNum; j++)
-			{//灰色ベジェ曲線を描画
+			// ベジェ曲線の計算
+			for (int j = 0; j < DivNum; j++)
+			{
 				homing[i].u = (1.0 / homing[i].DivNum) * homing[i].Counter2;
 
 				P01[0] = (1.0 - homing[i].u) * homing[i].P0[0] + homing[i].u * homing[i].P1[0]; P01[1] = (1.0 - homing[i].u) * homing[i].P0[1] + homing[i].u * homing[i].P1[1];
@@ -151,7 +155,7 @@ void Bezier::Move() {
 	for (int i = 0; i < HOMINGMAX; i++)
 	{
 
-		if (homing[i].f == 1)
+		if (homing[i].isLaserActive)
 		{
 			{//赤いベジェ曲線を描画
 				homing[i].u = (1.0 / homing[i].DivNum) * homing[i].Counter;
@@ -177,14 +181,9 @@ void Bezier::Move() {
 				if (homing[i].Counter == homing[i].DivNum && !isSecond)
 				{
 					homing[i].Counter = 0;
-					homing[i].f = 0;//存在を無に
-					/*isSecond = true;*/
+					homing[i].isLaserActive = false;//存在を無に
 				}
-				if (homing[i].Counter == homing[i].DivNum && isSecond) {
-					homing[i].Counter = 0;
-					homing[i].f = 0;//存在を無に
-					isSecond = false;
-				}
+				
 
 
 
@@ -199,10 +198,10 @@ void Bezier::Move() {
 
 
 				for (int j = 0; j < HOMINGTRAILMAX; j++) {
-					if (count % countNum == 0 && !isZHomi[j]) {
-						zhomi[j].x = homing[i].x;
-						zhomi[j].y = homing[i].y;
-						isZHomi[j] = true;
+					if (count % countNum == 0 && !isHomingTrail[j]) {
+						homingTrail[j].x = homing[i].x;
+						homingTrail[j].y = homing[i].y;
+						isHomingTrail[j] = true;
 						break;
 					}
 
@@ -233,20 +232,20 @@ void Bezier::Move() {
 			homing[i].P1[1] = player.y - 10;
 			homing[i].P2[0] = player.x;
 			homing[i].P2[1] = player.y - 30;
-			homing[i].f = 1;
+			homing[i].isLaserActive = true;
 		}
 
 	}
 
 
 	for (int j = 0; j < HOMINGTRAILMAX; j++) {
-		if (isZHomi[j]) {
+		if (isHomingTrail[j]) {
 			cd[j]++;
 		}
 
 		if (cd[j] >= 30 || Novice::CheckHitKey(DIK_SPACE) && !preKey) {
 			cd[j] = 0;
-			isZHomi[j] = false;
+			isHomingTrail[j] = false;
 		}
 	}
 
@@ -296,8 +295,8 @@ void Bezier::Draw() {
 		Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, RED);
 	}
 	for (int i = 0; i < HOMINGTRAILMAX; i++) {
-		if (isZHomi[i]) {
-			Novice::DrawSprite(zhomi[i].x, zhomi[i].y, textureHandle, 1, 1, 0, WHITE);
+		if (isHomingTrail[i]) {
+			Novice::DrawSprite(homingTrail[i].x, homingTrail[i].y, textureHandle, 1, 1, 0, WHITE);
 		}
 	}
 	
