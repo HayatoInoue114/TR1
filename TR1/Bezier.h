@@ -1,7 +1,7 @@
 #include "MT.h"
 
 #define HOMINGMAX 10//ホーミング総数
-#define HOMINGTRAILMAX 3000//残像ホーミング総数
+#define HOMINGTRAILMAX 300//残像ホーミング総数
 
 const int kWindowWidth = 1280;
 const int kWindowHeight = 720;
@@ -34,9 +34,7 @@ private:
 		int DivNum;
 
 		// 制御点
-		float P0[2];
-		float P1[2];
-		float P2[2];
+		Vector2 P0, P1, P2;
 		bool isLaserActive;//レーザーの有無
 	};
 
@@ -47,7 +45,7 @@ private:
 	homing_t homing[HOMINGMAX];
 
 	//制御点
-	double P01[2], P12[2], P02[2];
+	Vector2 P01, P12, P02;
 	//
 	int DivNum;
 
