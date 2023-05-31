@@ -41,6 +41,8 @@ Bezier::Bezier()
 	size = 10;
 
 	P01, P12, P02 = {};
+
+	textureHandle = Novice::LoadTexture("./Resource./ball.png");
 	
 }
 
@@ -143,7 +145,7 @@ void Bezier::Move() {
 				
 				
 
-				Novice::DrawEllipse(homing[i].x - 1, homing[i].y - 1,10,10,0.0f,RED,kFillModeSolid);	//ベジェ曲線を描画
+				/*Novice::DrawEllipse(homing[i].x - 1, homing[i].y - 1,10,10,0.0f,RED,kFillModeSolid);*/	//ベジェ曲線を描画
 				homing[i].Counter2++;
 				if (homing[i].Counter2 == homing[i].DivNum) homing[i].Counter2 = 0;
 				
@@ -170,7 +172,7 @@ void Bezier::Move() {
 				homing[i].y = (int)P02.y;
 
 
-				Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);
+				/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);*/
 
 				homing[i].Counter++;
 
@@ -286,12 +288,13 @@ void Bezier::Move() {
 
 void Bezier::Draw() {
 	if (!isLoad) {
-		textureHandle = Novice::LoadTexture("./Resource./ball.png");
 		
 	}
 
 	for (int i = 0; i < HOMINGMAX; i++) {
-		Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, RED);
+		if (homing[i].isLaserActive) {
+			Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, RED);
+		}
 	}
 	for (int i = 0; i < HOMINGTRAILMAX; i++) {
 		if (isHomingTrail[i]) {
