@@ -124,6 +124,8 @@ void Bezier::Move() {
 		homing[i].startPoint.x = start.pos.x;
 		homing[i].startPoint.y = start.pos.y;
 
+		homing[i].DivNum = 50;
+
 		if (Novice::CheckHitKey(DIK_SPACE))
 		{
 			if (!homing[i].isLaserActive)
@@ -133,7 +135,7 @@ void Bezier::Move() {
 				homing[i].t = 0;
 				homing[i].Counter = 0;
 				homing[i].Counter2 = 0;
-				homing[i].DivNum = 50;
+				
 
 				
 
@@ -168,6 +170,11 @@ void Bezier::Move() {
 
 		homing[i].Counter2++;
 
+		for (int j = 0; j < DivNum; j++)
+		{
+			Novice::DrawEllipse(homing[i].x - 1, homing[i].y - 1, 10, 10, 0.0f, RED, kFillModeSolid);	//ベジェ曲線を描画
+		}
+
 		if (!homing[i].isLaserActive) continue;
 		if (homing[i].isLaserActive)
 		{
@@ -186,7 +193,7 @@ void Bezier::Move() {
 				
 				
 
-				/*Novice::DrawEllipse(homing[i].x - 1, homing[i].y - 1,10,10,0.0f,RED,kFillModeSolid)*/;	//ベジェ曲線を描画
+				
 				
 				if (homing[i].Counter2 == homing[i].DivNum) homing[i].Counter2 = 0;
 				
@@ -211,7 +218,18 @@ void Bezier::Move() {
 		homing[i].x = (int)P02.x;
 		homing[i].y = (int)P02.y;
 
-				homing[i].Counter++;
+		homing[i].Counter++;
+
+				// もしカウンターが分割数に達していたら０に戻す
+				if (homing[i].Counter == homing[i].DivNum && !isSecond)
+				{
+					homing[i].Counter = 0;
+					homing[i].isLaserActive = false;//存在を無に
+					isEndPointSet = false;
+					isMidPointSet = false;
+				}
+
+				Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);
 
 				if (homing[i].isLaserActive)
 				{
@@ -221,20 +239,13 @@ void Bezier::Move() {
 
 						/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);*/
 
-						Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);
+						
 
 						homing[i].Counter++;
 
 
 
-						// もしカウンターが分割数に達していたら０に戻す
-						if (homing[i].Counter == homing[i].DivNum && !isSecond)
-						{
-							homing[i].Counter = 0;
-							homing[i].isLaserActive = false;//存在を無に
-							isEndPointSet = false;
-							isMidPointSet = false;
-						}
+						
 
 
 
@@ -287,7 +298,7 @@ void Bezier::Move() {
 			homing[i].isLaserActive = true;
 		}*/
 
-			}
+	}
 
 
 	/*for (int j = 0; j < HOMINGTRAILMAX; j++) {
@@ -363,8 +374,10 @@ void Bezier::Draw() {
 	}
 	for (int i = 0; i < HOMINGTRAILMAX; i++) {
 		if (isHomingTrail[i]) {
-			Novice::DrawSprite(homingTrail[i].x, homingTrail[i].y, textureHandle, 1, 1, 0, WHITE);
+			
 		}
+
+		Novice::DrawSprite(homingTrail[i].x, homingTrail[i].y, textureHandle, 1, 1, 0, WHITE);
 	}
 	
 	Novice::DrawEllipse(player.x, player.y, size, size, 0, WHITE, kFillModeSolid);//自機表示
