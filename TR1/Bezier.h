@@ -34,7 +34,7 @@ private:
 		int DivNum;
 
 		// 制御点
-		Vector2 P0, P1, P2;
+		Vector2 startPoint, midPoint, endPoint;
 		bool isLaserActive;//レーザーの有無
 	};
 
