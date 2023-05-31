@@ -2,6 +2,7 @@
 
 #define HOMINGMAX 1//ホーミング総数
 #define HOMINGTRAILMAX 100//残像ホーミング総数
+#define SETCOUNTMAX 5//制御点の総数
 
 const int kWindowWidth = 1280;
 const int kWindowHeight = 720;
@@ -73,8 +74,9 @@ private:
 	
 	int size;
 
-	bool isEndPointSet;
-	bool isMidPointSet;
+	bool isEndPointSet[SETCOUNTMAX];
+	bool isMidPointSet[SETCOUNTMAX];
+	int setCount;
 };
 
 

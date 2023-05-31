@@ -45,8 +45,11 @@ Bezier::Bezier()
 
 	textureHandle = Novice::LoadTexture("./Resource./ball.png");
 	
-	isEndPointSet = false;
-	isMidPointSet = false;
+	for (int i = 0; i < SETCOUNTMAX; i++) {
+		isEndPointSet[i] = false;
+		isMidPointSet[i] = false;
+	}
+	
 }
 
 Bezier::~Bezier() {
@@ -95,30 +98,32 @@ void Bezier::Move() {
 
 	for (int i = 0; i < HOMINGMAX; i++)
 	{//ホーミング弾出現処理
+		for (int i = 0; i < SETCOUNTMAX; i++) {
+			if (isEndPointSet[i] && isMidPointSet[i] && Novice::IsTriggerMouse(0)) {
+				isEndPointSet[i] = false;
+				isMidPointSet[i] = false;
+			}
+			//プレイヤーに届く
+			if (Novice::IsTriggerMouse(0) && !isEndPointSet[i]) {
+				isEndPointSet[i] = true;
+				homing[i].endPoint.x = player.x;
+				homing[i].endPoint.y = player.y;
+			}
 
-		if (isEndPointSet && isMidPointSet && Novice::IsTriggerMouse(0)) {
-			isEndPointSet = false;
-			isMidPointSet = false;
-		}
-		//プレイヤーに届く
-		if (Novice::IsTriggerMouse(0) && !isEndPointSet) {
-			isEndPointSet = true;
-			homing[i].endPoint.x = player.x;
-			homing[i].endPoint.y = player.y;
-		}
-
-		if (!isEndPointSet && !isMidPointSet) {
-			homing[i].endPoint.x = player.x;
-			homing[i].endPoint.y = player.y;
-		}
+			if (!isEndPointSet && !isMidPointSet) {
+				homing[i].endPoint.x = player.x;
+				homing[i].endPoint.y = player.y;
+			}
 
 
-		//中間の制御点
-		if (Novice::IsTriggerMouse(1) && !isMidPointSet) {
-			isMidPointSet = true;
-			homing[i].midPoint.x = player.x;
-			homing[i].midPoint.y = player.y;
+			//中間の制御点
+			if (Novice::IsTriggerMouse(1) && !isMidPointSet[i]) {
+				isMidPointSet[i] = true;
+				homing[i].midPoint.x = player.x;
+				homing[i].midPoint.y = player.y;
+			}
 		}
+		
 
 		if (isEndPointSet && !isMidPointSet) {
 			homing[i].midPoint.x = player.x;
@@ -356,7 +361,7 @@ void Bezier::Draw() {
 			
 			/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, RED);*/
 		}
-		Novice::DrawEllipse(homing[i].x, homing[i].y, 10, 10, 0.0f, RED, kFillModeSolid);
+		/*Novice::DrawEllipse(homing[i].x, homing[i].y, 10, 10, 0.0f, RED, kFillModeSolid);*/
 	}
 	/*for (int i = 0; i < HOMINGTRAILMAX; i++) {
 		if (isHomingTrail[i]) {
@@ -367,7 +372,7 @@ void Bezier::Draw() {
 	}*/
 	
 	//Novice::DrawEllipse(player.x, player.y, size, size, 0, WHITE, kFillModeSolid);//自機表示
-	Novice::DrawEllipse(start.pos.x, start.pos.y, start.size.x, start.size.y, 0, WHITE, kFillModeSolid);//敵表示
+	//Novice::DrawEllipse(start.pos.x, start.pos.y, start.size.x, start.size.y, 0, WHITE, kFillModeSolid);//敵表示
 
 
 	
@@ -384,9 +389,9 @@ void Bezier::Draw() {
 		Novice::DrawEllipse(homing[i].t, homing[i].t, 5, 5, 0, RED, kFillModeSolid);
 	}
 
-	//t同士を結んだ線
-	Novice::DrawLine(P01.x, P01.y, P12.x, P12.y, WHITE);
-	Novice::DrawLine(P12.x, P12.y, P02.x, P02.y, WHITE);
+	////t同士を結んだ線
+	//Novice::DrawLine(P01.x, P01.y, P12.x, P12.y, WHITE);
+	//Novice::DrawLine(P12.x, P12.y, P02.x, P02.y, WHITE);
 	
 	
 	
