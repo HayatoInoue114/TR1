@@ -1,7 +1,7 @@
 #include "MT.h"
 
 #define HOMINGMAX 1//ホーミング総数
-#define HOMINGTRAILMAX 1//残像ホーミング総数
+#define HOMINGTRAILMAX 100//残像ホーミング総数
 
 const int kWindowWidth = 1280;
 const int kWindowHeight = 720;
@@ -53,18 +53,19 @@ private:
 
 	bool isLoad;
 
-	struct Block {
+	struct Start {
 		Vector2 pos;
 		Vector2 size;
 	};
 
-	Block block1;
+	Start start;
 
 	int count;
 	int countNum;
 	int cd[HOMINGTRAILMAX];
 	bool preKey;
 	bool isSecond;
+	int velocity;
 
 	bool isMove;
 	bool isRight;
