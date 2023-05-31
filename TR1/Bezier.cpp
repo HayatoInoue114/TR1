@@ -42,6 +42,7 @@ Bezier::Bezier()
 
 	P01, P12, P02 = {};
 	
+	textureHandle = Novice::LoadTexture("./Resource./ball.png");
 }
 
 Bezier::~Bezier() {
@@ -121,99 +122,109 @@ void Bezier::Move() {
 	// 軌跡
 	for (int i = 0; i < HOMINGMAX; i++)
 	{
-		if (!homing[i].isLaserActive) continue;
+
+		//赤のベジェ曲線の計算
+		for (int j = 0; j < DivNum; j++)
+		{
+			homing[i].u = (1.0f / homing[i].DivNum) * homing[i].Counter2;
+
+			P01.x = (1.0f - homing[i].u) * homing[i].P0.x + homing[i].u * homing[i].P1.x;
+			P01.y = (1.0f - homing[i].u) * homing[i].P0.y + homing[i].u * homing[i].P1.y;
+
+			P12.x = (1.0f - homing[i].u) * homing[i].P1.x + homing[i].u * homing[i].P2.x;
+			P12.y = (1.0f - homing[i].u) * homing[i].P1.y + homing[i].u * homing[i].P2.y;
+
+			P02.x = (1.0f - homing[i].u) * P01.x + homing[i].u * P12.x; P02.y = (1.0f - homing[i].u) * P01.y + homing[i].u * P12.y;
+
+			if (count % countNum == 0) {
+				homing[i].x = (int)P02.x;
+				homing[i].y = (int)P02.y;
+			}
+
+
+
+
+			Novice::DrawEllipse(homing[i].x - 1, homing[i].y - 1, 1, 1, 0.0f, RED, kFillModeSolid);	//ベジェ曲線を描画
+			homing[i].Counter2++;
+			if (homing[i].Counter2 == homing[i].DivNum) homing[i].Counter2 = 0;
+
+		}
+		/*if (!homing[i].isLaserActive) continue;
 		if (homing[i].isLaserActive)
 		{
 
-			//赤のベジェ曲線の計算
-			for (int j = 0; j < DivNum; j++)
-			{
-				homing[i].u = (1.0f / homing[i].DivNum) * homing[i].Counter2;
-
-				P01.x = (1.0f - homing[i].u) * homing[i].P0.x + homing[i].u * homing[i].P1.x; P01.y = (1.0f - homing[i].u) * homing[i].P0.y + homing[i].u * homing[i].P1.y;
-				P12.x = (1.0f - homing[i].u) * homing[i].P1.x + homing[i].u * homing[i].P2.x; P12.y = (1.0f - homing[i].u) * homing[i].P1.y + homing[i].u * homing[i].P2.y;
-
-				P02.x = (1.0f - homing[i].u) * P01.x + homing[i].u * P12.x; P02.y = (1.0f - homing[i].u) * P01.y + homing[i].u * P12.y;
-
-				if (count % countNum == 0) {
-					homing[i].x = (int)P02.x;
-					homing[i].y = (int)P02.y;
-				}
-				
-				
-				
-
-				Novice::DrawEllipse(homing[i].x - 1, homing[i].y - 1,1,1,0.0f,RED,kFillModeSolid);	//ベジェ曲線を描画
-				homing[i].Counter2++;
-				if (homing[i].Counter2 == homing[i].DivNum) homing[i].Counter2 = 0;
-				
-			}
-		}
+			
+		}*/
 	}
 
 	for (int i = 0; i < HOMINGMAX; i++)
 	{
 
-		if (homing[i].isLaserActive)
-		{
-			{//ベジェ曲線を描画
-				homing[i].u = (1.0f / homing[i].DivNum) * homing[i].Counter;
+		{//ベジェ曲線を描画
+			homing[i].u = (1.0f / homing[i].DivNum) * homing[i].Counter;
 
-				P01.x = (1.0f - homing[i].u) * homing[i].P0.x + homing[i].u * homing[i].P1.x; P01.y = (1.0f - homing[i].u) * homing[i].P0.y + homing[i].u * homing[i].P1.y;
-				P12.x = (1.0f - homing[i].u) * homing[i].P1.x + homing[i].u * homing[i].P2.x; P12.y = (1.0f - homing[i].u) * homing[i].P1.y + homing[i].u * homing[i].P2.y;
+			P01.x = (1.0f - homing[i].u) * homing[i].P0.x + homing[i].u * homing[i].P1.x;
+			P01.y = (1.0f - homing[i].u) * homing[i].P0.y + homing[i].u * homing[i].P1.y;
 
-
-				P02.x = (1.0f - homing[i].u) * P01.x + homing[i].u * P12.x; P02.y = (1.0f - homing[i].u) * P01.y + homing[i].u * P12.y;
+			P12.x = (1.0f - homing[i].u) * homing[i].P1.x + homing[i].u * homing[i].P2.x;
+			P12.y = (1.0f - homing[i].u) * homing[i].P1.y + homing[i].u * homing[i].P2.y;
 
 
-				homing[i].x = (int)P02.x;
-				homing[i].y = (int)P02.y;
+			P02.x = (1.0f - homing[i].u) * P01.x + homing[i].u * P12.x; P02.y = (1.0f - homing[i].u) * P01.y + homing[i].u * P12.y;
 
 
-				Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);
-
-				homing[i].Counter++;
-
+			homing[i].x = (int)P02.x;
+			homing[i].y = (int)P02.y;
 
 
-				// もしカウンターが分割数に達していたら０に戻す
-				if (homing[i].Counter == homing[i].DivNum && !isSecond)
-				{
-					homing[i].Counter = 0;
-					homing[i].isLaserActive = false;//存在を無に
+			/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);*/
+
+			homing[i].Counter++;
+
+
+
+			// もしカウンターが分割数に達していたら０に戻す
+			if (homing[i].Counter == homing[i].DivNum && !isSecond)
+			{
+				homing[i].Counter = 0;
+				homing[i].isLaserActive = false;//存在を無に
+			}
+
+
+
+
+			if (!isSecond) {
+				homing[i].P2.x = player.x;
+				homing[i].P2.y = player.y + 5;
+			}
+			else {
+				homing[i].P2.x = player.x;
+				homing[i].P2.y = player.y - 30;
+			}
+
+
+			for (int j = 0; j < HOMINGTRAILMAX; j++) {
+				if (count % countNum == 0 && !isHomingTrail[j]) {
+					homingTrail[j].x = homing[i].x;
+					homingTrail[j].y = homing[i].y;
+					isHomingTrail[j] = true;
+					break;
 				}
-				
-
-
-
-				if (!isSecond) {
-					homing[i].P2.x = player.x;
-					homing[i].P2.y = player.y + 5;
-				}
-				else {
-					homing[i].P2.x = player.x;
-					homing[i].P2.y = player.y - 30;
-				}
-
-
-				for (int j = 0; j < HOMINGTRAILMAX; j++) {
-					if (count % countNum == 0 && !isHomingTrail[j]) {
-						homingTrail[j].x = homing[i].x;
-						homingTrail[j].y = homing[i].y;
-						isHomingTrail[j] = true;
-						break;
-					}
-
-				}
-
-
-
-
 
 			}
+
+
+
+
+
 		}
 
-		if (isSecond) {
+		if (homing[i].isLaserActive)
+		{
+			
+		}
+
+		/*if (isSecond) {
 			homing[i].x = 0;
 			homing[i].y = 0;
 			homing[i].u = 0;
@@ -232,7 +243,7 @@ void Bezier::Move() {
 			homing[i].P2.x = player.x;
 			homing[i].P2.y = player.y - 30;
 			homing[i].isLaserActive = true;
-		}
+		}*/
 
 	}
 
@@ -286,7 +297,7 @@ void Bezier::Move() {
 
 void Bezier::Draw() {
 	if (!isLoad) {
-		textureHandle = Novice::LoadTexture("./Resource./ball.png");
+		
 		
 	}
 
