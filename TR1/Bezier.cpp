@@ -103,12 +103,12 @@ void Bezier::Move() {
 				homing[i].P0.x = block1.pos.x + GetRandom(0.0f, block1.size.x);
 				homing[i].P0.y = block1.pos.y;
 				if (player.x >= homing[i].P0.x) {
-					homing[i].P1.x = player.x + 200;
+					homing[i].P1.x = player.x + GetRandom(50,300);
 				}
 				if (player.x <= homing[i].P0.x) {
-					homing[i].P1.x = player.x - 200;
+					homing[i].P1.x = player.x - GetRandom(50, 300);
 				}
-				homing[i].P1.y = player.y;
+				homing[i].P1.y = player.y + GetRandom(-100,100);
 				homing[i].P2.x = player.x;
 				homing[i].P2.y = player.y + 5;
 				homing[i].isLaserActive = true;
@@ -304,6 +304,23 @@ void Bezier::Draw() {
 	
 	Novice::DrawEllipse(player.x, player.y, size, size, 0, WHITE, kFillModeSolid);//自機表示
 	Novice::DrawBox(block1.pos.x, block1.pos.y, block1.size.x, block1.size.y, 0, WHITE, kFillModeSolid);//敵表示
+
+	for (int i = 0; i < HOMINGMAX; i++) {
+		//制御点
+		Novice::DrawEllipse(homing[i].P0.x, homing[i].P0.y, 5, 5, 0.0f, RED, kFillModeSolid);
+		Novice::DrawEllipse(homing[i].P1.x, homing[i].P1.y, 5, 5, 0.0f, RED, kFillModeSolid);
+		Novice::DrawEllipse(homing[i].P2.x, homing[i].P2.y, 5, 5, 0.0f, RED, kFillModeSolid);
+
+		//制御点同士を結んだ線
+		Novice::DrawLine(homing[i].P0.x, homing[i].P0.y, homing[i].P1.x, homing[i].P1.y, WHITE);
+		Novice::DrawLine(homing[i].P1.x, homing[i].P1.y, homing[i].P2.x, homing[i].P2.y, WHITE);
+
+		Novice::DrawEllipse(homing[i].u, homing[i].u, 5, 5, 0, RED, kFillModeSolid);
+	}
+
+	////t同士を結んだ線
+	//Novice::DrawLine(P01.x, P01.y, P12.x, P12.y, WHITE);
+	//Novice::DrawLine(P12.x, P12.y, P02.x, P02.y, WHITE);
 
 }
 
