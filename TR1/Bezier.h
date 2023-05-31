@@ -1,7 +1,7 @@
 #include "MT.h"
 
-#define HOMINGMAX 10//ホーミング総数
-#define HOMINGTRAILMAX 300//残像ホーミング総数
+#define HOMINGMAX 1//ホーミング総数
+#define HOMINGTRAILMAX 1//残像ホーミング総数
 
 const int kWindowWidth = 1280;
 const int kWindowHeight = 720;
@@ -18,7 +18,7 @@ public:
 
 private:
 	struct Player {
-		float x, y;
+		int x, y;
 	};
 
 	struct homing_t
@@ -26,7 +26,7 @@ private:
 		//ホーミング座標
 		float x;
 		float y;
-		float u;
+		float t;
 
 		//ベジェ曲線用
 		int Counter;
@@ -34,7 +34,7 @@ private:
 		int DivNum;
 
 		// 制御点
-		Vector2 P0, P1, P2;
+		Vector2 startPoint, midPoint, endPoint;
 		bool isLaserActive;//レーザーの有無
 	};
 
@@ -69,8 +69,11 @@ private:
 	bool isMove;
 	bool isRight;
 	bool isLeft;
-
+	
 	int size;
+
+	bool isEndPointSet;
+	bool isMidPointSet;
 };
 
 
