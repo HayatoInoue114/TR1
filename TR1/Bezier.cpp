@@ -170,10 +170,8 @@ void Bezier::Move() {
 
 		homing[i].Counter2++;
 
-		for (int j = 0; j < DivNum; j++)
-		{
-			Novice::DrawEllipse(homing[i].x - 1, homing[i].y - 1, 10, 10, 0.0f, RED, kFillModeSolid);	//ベジェ曲線を描画
-		}
+
+		Novice::DrawEllipse(homing[i].x - 1, homing[i].y - 1, 10, 10, 0.0f, RED, kFillModeSolid);	//ベジェ曲線を描画
 
 		if (!homing[i].isLaserActive) continue;
 		if (homing[i].isLaserActive)
