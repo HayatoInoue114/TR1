@@ -211,29 +211,31 @@ void Bezier::Move() {
 		homing[i].x = (int)P02.x;
 		homing[i].y = (int)P02.y;
 
-		homing[i].Counter++;
+				homing[i].Counter++;
 
-		if (homing[i].isLaserActive)
-		{
-			{//ベジェ曲線を描画
-			
-
-
-				/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);*/
-
-				
-
-
-
-				// もしカウンターが分割数に達していたら０に戻す
-				if (homing[i].Counter == homing[i].DivNum && !isSecond)
+				if (homing[i].isLaserActive)
 				{
-					homing[i].Counter = 0;
-					homing[i].isLaserActive = false;//存在を無に
-					isEndPointSet = false;
-					isMidPointSet = false;
-				}
-				
+					{//ベジェ曲線を描画
+
+
+
+						/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);*/
+
+						Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);
+
+						homing[i].Counter++;
+
+
+
+						// もしカウンターが分割数に達していたら０に戻す
+						if (homing[i].Counter == homing[i].DivNum && !isSecond)
+						{
+							homing[i].Counter = 0;
+							homing[i].isLaserActive = false;//存在を無に
+							isEndPointSet = false;
+							isMidPointSet = false;
+						}
+
 
 
 
@@ -247,13 +249,13 @@ void Bezier::Move() {
 				}
 
 
-				for (int j = 0; j < HOMINGTRAILMAX; j++) {
-					if (count % countNum == 0 && !isHomingTrail[j]) {
-						homingTrail[j].x = homing[i].x;
-						homingTrail[j].y = homing[i].y;
-						isHomingTrail[j] = true;
-						break;
-					}
+						for (int j = 0; j < HOMINGTRAILMAX; j++) {
+							if (count % countNum == 0 && !isHomingTrail[j]) {
+								homingTrail[j].x = homing[i].x;
+								homingTrail[j].y = homing[i].y;
+								isHomingTrail[j] = true;
+								break;
+							}
 
 				}*/
 
@@ -261,8 +263,8 @@ void Bezier::Move() {
 
 
 
-			}
-		}
+					}
+				}
 
 		/*if (isSecond) {
 			homing[i].x = 0;
@@ -285,7 +287,7 @@ void Bezier::Move() {
 			homing[i].isLaserActive = true;
 		}*/
 
-	}
+			}
 
 
 	/*for (int j = 0; j < HOMINGTRAILMAX; j++) {
