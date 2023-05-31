@@ -26,7 +26,7 @@ private:
 		//ホーミング座標
 		float x;
 		float y;
-		float u;
+		float t;
 
 		//ベジェ曲線用
 		int Counter;

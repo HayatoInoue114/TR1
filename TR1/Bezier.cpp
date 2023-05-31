@@ -12,7 +12,7 @@ Bezier::Bezier()
 	{
 		homing[i].x = 0;
 		homing[i].y = 0;
-		homing[i].u = 0;
+		homing[i].t = 0;
 		homing[i].Counter = 0;
 		homing[i].Counter2 = 0;
 		homing[i].DivNum = 0;
@@ -60,7 +60,7 @@ void Bezier::Init() {
 	//{
 	//	homing[i].x = 0;
 	//	homing[i].y = 0;
-	//	homing[i].u = 0;
+	//	homing[i].t = 0;
 	//	homing[i].Counter = 0;
 	//	homing[i].Counter2 = 0;
 	//	homing[i].DivNum = 0;
@@ -96,7 +96,7 @@ void Bezier::Move() {
 			{
 				homing[i].x = 0;
 				homing[i].y = 0;
-				homing[i].u = 0;
+				homing[i].t = 0;
 				homing[i].Counter = 0;
 				homing[i].Counter2 = 0;
 				homing[i].DivNum = 50;
@@ -130,12 +130,12 @@ void Bezier::Move() {
 			//赤のベジェ曲線の計算
 			for (int j = 0; j < DivNum; j++)
 			{
-				homing[i].u = (1.0f / homing[i].DivNum) * homing[i].Counter2;
+				homing[i].t = (1.0f / homing[i].DivNum) * homing[i].Counter2;
 
-				P01.x = (1.0f - homing[i].u) * homing[i].P0.x + homing[i].u * homing[i].P1.x; P01.y = (1.0f - homing[i].u) * homing[i].P0.y + homing[i].u * homing[i].P1.y;
-				P12.x = (1.0f - homing[i].u) * homing[i].P1.x + homing[i].u * homing[i].P2.x; P12.y = (1.0f - homing[i].u) * homing[i].P1.y + homing[i].u * homing[i].P2.y;
+				P01.x = (1.0f - homing[i].t) * homing[i].P0.x + homing[i].t * homing[i].P1.x; P01.y = (1.0f - homing[i].t) * homing[i].P0.y + homing[i].t * homing[i].P1.y;
+				P12.x = (1.0f - homing[i].t) * homing[i].P1.x + homing[i].t * homing[i].P2.x; P12.y = (1.0f - homing[i].t) * homing[i].P1.y + homing[i].t * homing[i].P2.y;
 
-				P02.x = (1.0f - homing[i].u) * P01.x + homing[i].u * P12.x; P02.y = (1.0f - homing[i].u) * P01.y + homing[i].u * P12.y;
+				P02.x = (1.0f - homing[i].t) * P01.x + homing[i].t * P12.x; P02.y = (1.0f - homing[i].t) * P01.y + homing[i].t * P12.y;
 
 				if (count % countNum == 0) {
 					homing[i].x = (int)P02.x;
@@ -159,13 +159,13 @@ void Bezier::Move() {
 		if (homing[i].isLaserActive)
 		{
 			{//ベジェ曲線を描画
-				homing[i].u = (1.0f / homing[i].DivNum) * homing[i].Counter;
+				homing[i].t = (1.0f / homing[i].DivNum) * homing[i].Counter;
 
-				P01.x = (1.0f - homing[i].u) * homing[i].P0.x + homing[i].u * homing[i].P1.x; P01.y = (1.0f - homing[i].u) * homing[i].P0.y + homing[i].u * homing[i].P1.y;
-				P12.x = (1.0f - homing[i].u) * homing[i].P1.x + homing[i].u * homing[i].P2.x; P12.y = (1.0f - homing[i].u) * homing[i].P1.y + homing[i].u * homing[i].P2.y;
+				P01.x = (1.0f - homing[i].t) * homing[i].P0.x + homing[i].t * homing[i].P1.x; P01.y = (1.0f - homing[i].t) * homing[i].P0.y + homing[i].t * homing[i].P1.y;
+				P12.x = (1.0f - homing[i].t) * homing[i].P1.x + homing[i].t * homing[i].P2.x; P12.y = (1.0f - homing[i].t) * homing[i].P1.y + homing[i].t * homing[i].P2.y;
 
 
-				P02.x = (1.0f - homing[i].u) * P01.x + homing[i].u * P12.x; P02.y = (1.0f - homing[i].u) * P01.y + homing[i].u * P12.y;
+				P02.x = (1.0f - homing[i].t) * P01.x + homing[i].t * P12.x; P02.y = (1.0f - homing[i].t) * P01.y + homing[i].t * P12.y;
 
 
 				homing[i].x = (int)P02.x;
@@ -218,7 +218,7 @@ void Bezier::Move() {
 		if (isSecond) {
 			homing[i].x = 0;
 			homing[i].y = 0;
-			homing[i].u = 0;
+			homing[i].t = 0;
 			homing[i].Counter = 0;
 			homing[i].Counter2 = 0;
 			homing[i].DivNum = 500;
@@ -271,6 +271,7 @@ void Bezier::Move() {
 		isMove = true;
 		isRight = true;
 	}
+
 	if (!Novice::CheckHitKey(DIK_UP) && !Novice::CheckHitKey(DIK_DOWN) && !Novice::CheckHitKey(DIK_LEFT) && !Novice::CheckHitKey(DIK_RIGHT)) {
 		isMove = false;
 	}
@@ -315,7 +316,7 @@ void Bezier::Draw() {
 		Novice::DrawLine(homing[i].P0.x, homing[i].P0.y, homing[i].P1.x, homing[i].P1.y, WHITE);
 		Novice::DrawLine(homing[i].P1.x, homing[i].P1.y, homing[i].P2.x, homing[i].P2.y, WHITE);
 
-		Novice::DrawEllipse(homing[i].u, homing[i].u, 5, 5, 0, RED, kFillModeSolid);
+		Novice::DrawEllipse(homing[i].t, homing[i].t, 5, 5, 0, RED, kFillModeSolid);
 	}
 
 	////t同士を結んだ線
