@@ -149,42 +149,42 @@ void Bezier::Move() {
 	}
 
 	// 軌跡
-	for (int i = 0; i < HOMINGMAX; i++)
-	{
+	//for (int i = 0; i < HOMINGMAX; i++)
+	//{
 
-		//赤のベジェ曲線の計算
-		
-		if (!homing[i].isLaserActive) continue;
-		if (homing[i].isLaserActive)
-		{
+	//	//赤のベジェ曲線の計算
+	//	
+	//	if (!homing[i].isLaserActive) continue;
+	//	if (homing[i].isLaserActive)
+	//	{
 
-			for (int j = 0; j < DivNum; j++)
-			{
-				homing[i].u = (1.0f / homing[i].DivNum) * homing[i].Counter2;
+	//		for (int j = 0; j < DivNum; j++)
+	//		{
+	//			homing[i].u = (1.0f / homing[i].DivNum) * homing[i].Counter2;
 
-				P01.x = (1.0f - homing[i].u) * homing[i].P0.x + homing[i].u * homing[i].P1.x;
-				P01.y = (1.0f - homing[i].u) * homing[i].P0.y + homing[i].u * homing[i].P1.y;
+	//			P01.x = (1.0f - homing[i].u) * homing[i].P0.x + homing[i].u * homing[i].P1.x;
+	//			P01.y = (1.0f - homing[i].u) * homing[i].P0.y + homing[i].u * homing[i].P1.y;
 
-				P12.x = (1.0f - homing[i].u) * homing[i].P1.x + homing[i].u * homing[i].P2.x;
-				P12.y = (1.0f - homing[i].u) * homing[i].P1.y + homing[i].u * homing[i].P2.y;
+	//			P12.x = (1.0f - homing[i].u) * homing[i].P1.x + homing[i].u * homing[i].P2.x;
+	//			P12.y = (1.0f - homing[i].u) * homing[i].P1.y + homing[i].u * homing[i].P2.y;
 
-				P02.x = (1.0f - homing[i].u) * P01.x + homing[i].u * P12.x; P02.y = (1.0f - homing[i].u) * P01.y + homing[i].u * P12.y;
+	//			P02.x = (1.0f - homing[i].u) * P01.x + homing[i].u * P12.x; P02.y = (1.0f - homing[i].u) * P01.y + homing[i].u * P12.y;
 
-				if (count % countNum == 0) {
-					homing[i].x = (int)P02.x;
-					homing[i].y = (int)P02.y;
-				}
-
-
+	//			if (count % countNum == 0) {
+	//				homing[i].x = (int)P02.x;
+	//				homing[i].y = (int)P02.y;
+	//			}
 
 
-				Novice::DrawEllipse(homing[i].x - 1, homing[i].y - 1, 1, 1, 0.0f, RED, kFillModeSolid);	//ベジェ曲線を描画
-				homing[i].Counter2++;
-				if (homing[i].Counter2 == homing[i].DivNum) homing[i].Counter2 = 0;
 
-			}
-		}
-	}
+
+	//			Novice::DrawEllipse(homing[i].x - 1, homing[i].y - 1, 1, 1, 0.0f, RED, kFillModeSolid);	//ベジェ曲線を描画
+	//			homing[i].Counter2++;
+	//			if (homing[i].Counter2 == homing[i].DivNum) homing[i].Counter2 = 0;
+
+	//		}
+	//	}
+	//}
 
 	for (int i = 0; i < HOMINGMAX; i++)
 	{
@@ -214,8 +214,6 @@ void Bezier::Move() {
 					homing[i].Counter++;
 
 					/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);*/
-
-				/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);*/
 
 					homing[i].Counter++;
 
