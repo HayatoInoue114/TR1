@@ -142,13 +142,6 @@ void Bezier::Move() {
 				homing[i].Counter2 = 0;
 				
 
-				
-
-				
-
-				
-				
-				
 				homing[i].isLaserActive = true;
 				
 			}
@@ -222,14 +215,14 @@ void Bezier::Move() {
 				
 				}
 
-				Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);
+				/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);*/
 
 				if (homing[i].isLaserActive)
 				{
 					{//ベジェ曲線を描画
 
 
-
+						Novice::DrawEllipse(homing[i].x, homing[i].y, 20, 20, 0, WHITE, kFillModeSolid);
 						/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);*/
 
 						
@@ -358,22 +351,22 @@ void Bezier::Draw() {
 	Novice::ScreenPrintf(0, 0, "endPointSet : leftClick  ,  midPointSet : rightClick");
 
 
-	//for (int i = 0; i < HOMINGMAX; i++) {
-	//	if (homing[i].isLaserActive) {
-	//		
-	//		/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, RED);*/
-	//	}
-	//	Novice::DrawEllipse(homing[i].x, homing[i].y, 10, 10, 0.0f, RED, kFillModeWireFrame);
-	//}
-	//for (int i = 0; i < HOMINGTRAILMAX; i++) {
-	//	if (isHomingTrail[i]) {
-	//		
-	//	}
+	for (int i = 0; i < HOMINGMAX; i++) {
+		if (homing[i].isLaserActive) {
+			
+			/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, RED);*/
+		}
+		Novice::DrawEllipse(homing[i].x, homing[i].y, 10, 10, 0.0f, RED, kFillModeSolid);
+	}
+	/*for (int i = 0; i < HOMINGTRAILMAX; i++) {
+		if (isHomingTrail[i]) {
+			
+		}
 
-	//	Novice::DrawSprite(homingTrail[i].x, homingTrail[i].y, textureHandle, 1, 1, 0, WHITE);
-	//}
+		Novice::DrawSprite(homingTrail[i].x, homingTrail[i].y, textureHandle, 1, 1, 0, WHITE);
+	}*/
 	
-	Novice::DrawEllipse(player.x, player.y, size, size, 0, WHITE, kFillModeSolid);//自機表示
+	//Novice::DrawEllipse(player.x, player.y, size, size, 0, WHITE, kFillModeSolid);//自機表示
 	Novice::DrawEllipse(start.pos.x, start.pos.y, start.size.x, start.size.y, 0, WHITE, kFillModeSolid);//敵表示
 
 
