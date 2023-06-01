@@ -2,6 +2,7 @@
 
 #define HOMINGMAX 1//ホーミング総数
 #define HOMINGTRAILMAX 100//残像ホーミング総数
+#define SETMIDPOINTMAX 2
 
 const int kWindowWidth = 1280;
 const int kWindowHeight = 720;
@@ -34,7 +35,7 @@ private:
 		int DivNum;
 
 		// 制御点
-		Vector2 startPoint, midPoint, endPoint;
+		Vector2 startPoint, midPoint[SETMIDPOINTMAX], endPoint;
 		bool isLaserActive;//レーザーの有無
 	};
 
@@ -45,7 +46,7 @@ private:
 	homing_t homing[HOMINGMAX];
 
 	//制御点
-	Vector2 P01, P12, P02;
+	Vector2 P01, P12, P23, P03;
 	//
 	int DivNum;
 
@@ -74,7 +75,7 @@ private:
 	int size;
 
 	bool isEndPointSet;
-	bool isMidPointSet;
+	bool isMidPointSet[SETMIDPOINTMAX];
 };
 
 
