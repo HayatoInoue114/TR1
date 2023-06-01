@@ -41,7 +41,7 @@ Bezier::Bezier()
 
 	size = 10;
 
-	P01, P12, P23, P03 = {};
+	P01, P12, P23, P03, P02, P13 = {};
 
 	textureHandle = Novice::LoadTexture("./Resource./ball.png");
 	
@@ -50,6 +50,7 @@ Bezier::Bezier()
 		isMidPointSet[i] = false;
 	}
 	
+	color[0] = RED;
 }
 
 Bezier::~Bezier() {
@@ -116,6 +117,10 @@ void Bezier::Move() {
 		if (!isEndPointSet && !isMidPointSet[0] && !isMidPointSet[1]) {
 			homing[i].endPoint.x = player.x;
 			homing[i].endPoint.y = player.y;
+			color[0] = WHITE;
+			color[1] = WHITE;
+			color[2] = WHITE;
+			color[3] = RED;
 		}
 
 
@@ -129,6 +134,10 @@ void Bezier::Move() {
 		if (isEndPointSet && !isMidPointSet && !isMidPointSet[1]) {
 			homing[i].midPoint[0].x = player.x;
 			homing[i].midPoint[0].y = player.y;
+			color[0] = WHITE;
+			color[1] = RED;
+			color[2] = WHITE;
+			color[3] = WHITE;
 		}
 
 		//中間の制御点2
@@ -141,6 +150,17 @@ void Bezier::Move() {
 		if (isEndPointSet && isMidPointSet && !isMidPointSet[1]) {
 			homing[i].midPoint[1].x = player.x;
 			homing[i].midPoint[1].y = player.y;
+			color[0] = WHITE;
+			color[1] = WHITE;
+			color[2] = RED;
+			color[3] = WHITE;
+		}
+
+		if (isEndPointSet && isMidPointSet && isMidPointSet[1]){
+			color[0] = WHITE;
+			color[1] = WHITE;
+			color[2] = WHITE;
+			color[3] = WHITE;
 		}
 
 		Novice::ScreenPrintf(0, 20, "%d", isEndPointSet);
@@ -191,9 +211,15 @@ void Bezier::Move() {
 			P23.y = (1.0f - homing[i].t) * homing[i].midPoint[1].y + homing[i].t * homing[i].endPoint.y;
 
 
+			P02.x = (1.0f - homing[i].t) * P01.x + homing[i].t * P12.x;
+			P02.y = (1.0f - homing[i].t) * P01.y + homing[i].t * P12.y;
 
-			P03.x = (1.0f - homing[i].t) * P01.x + homing[i].t * P12.x + homing[i].t * P23.x;
-			P03.y = (1.0f - homing[i].t) * P01.y + homing[i].t * P12.y + homing[i].t * P23.y;
+			P13.x = (1.0f - homing[i].t) * P12.x + homing[i].t * P23.x;
+			P13.y = (1.0f - homing[i].t) * P12.y + homing[i].t * P23.y;
+
+
+			P03.x = (1.0f - homing[i].t) * P02.x + homing[i].t * P13.x;
+			P03.y = (1.0f - homing[i].t) * P02.y + homing[i].t * P13.y;
 
 			if (count % countNum == 0) {
 				homing[i].x = (int)P03.x;
@@ -203,7 +229,7 @@ void Bezier::Move() {
 
 
 
-			Novice::DrawEllipse(homing[i].x - 1, homing[i].y - 1, 1, 1, 0.0f, RED, kFillModeSolid);    //ベジェ曲線を描画
+			Novice::DrawEllipse(homing[i].x - 1, homing[i].y - 1, 2, 2, 0.0f, RED, kFillModeSolid);    //ベジェ曲線を描画
 			homing[i].Counter2++;
 			if (homing[i].Counter2 == homing[i].DivNum) homing[i].Counter2 = 0;
 
@@ -378,6 +404,8 @@ void Bezier::Move() {
 	if (Novice::CheckHitKey(DIK_D)) {
 		start.pos.x += velocity;
 	}
+
+	
 }
 
 void Bezier::Draw() {
@@ -408,21 +436,24 @@ void Bezier::Draw() {
 	
 	for (int i = 0; i < HOMINGMAX; i++) {
 		//制御点
-		Novice::DrawEllipse(homing[i].startPoint.x, homing[i].startPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
-		Novice::DrawEllipse(homing[i].midPoint[0].x, homing[i].midPoint[0].y, 5, 5, 0.0f, RED, kFillModeSolid);
-		Novice::DrawEllipse(homing[i].endPoint.x, homing[i].endPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
+		Novice::DrawEllipse(homing[i].startPoint.x, homing[i].startPoint.y, 5, 5, 0.0f, color[0], kFillModeSolid);
+		Novice::DrawEllipse(homing[i].midPoint[0].x, homing[i].midPoint[0].y, 5, 5, 0.0f, color[1], kFillModeSolid);
+		Novice::DrawEllipse(homing[i].midPoint[1].x, homing[i].midPoint[1].y, 5, 5, 0.0f, color[2], kFillModeSolid);
+		Novice::DrawEllipse(homing[i].endPoint.x, homing[i].endPoint.y, 5, 5, 0.0f, color[3], kFillModeSolid);
 
 		//制御点同士を結んだ線
 		Novice::DrawLine(homing[i].startPoint.x, homing[i].startPoint.y, homing[i].midPoint[0].x, homing[i].midPoint[0].y, WHITE);
-		Novice::DrawLine(homing[i].midPoint[0].x, homing[i].midPoint[0].y, homing[i].endPoint.x, homing[i].endPoint.y, WHITE);
+		Novice::DrawLine(homing[i].midPoint[0].x, homing[i].midPoint[0].y, homing[i].midPoint[1].x, homing[i].midPoint[1].y, WHITE);
+		Novice::DrawLine(homing[i].midPoint[1].x, homing[i].midPoint[1].y, homing[i].endPoint.x, homing[i].endPoint.y, WHITE);
 
 		/*Novice::DrawEllipse(homing[i].t, homing[i].t, 5, 5, 0, RED, kFillModeSolid);*/
 	}
 
 	////t同士を結んだ線
-	//Novice::DrawLine(P01.x, P01.y, P12.x, P12.y, WHITE);
-	//Novice::DrawLine(P12.x, P12.y, P03.x, P03.y, WHITE);
-	
+	/*Novice::DrawLine(P01.x, P01.y, P12.x, P12.y, WHITE);
+	Novice::DrawLine(P12.x, P12.y, P23.x, P23.y, WHITE);
+
+	Novice::DrawLine(P02.x, P02.y, P03.x, P03.y, WHITE);*/
 	
 	
 }

@@ -46,7 +46,8 @@ private:
 	homing_t homing[HOMINGMAX];
 
 	//制御点
-	Vector2 P01, P12, P23, P03;
+	Vector2 P01, P12, P23;
+	Vector2	 P02, P03, P13;
 	//
 	int DivNum;
 
@@ -71,6 +72,8 @@ private:
 	bool isMove;
 	bool isRight;
 	bool isLeft;
+
+	unsigned int color[5];
 	
 	int size;
 
