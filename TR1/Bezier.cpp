@@ -131,7 +131,7 @@ void Bezier::Move() {
 
 		homing[i].DivNum = 50;
 
-		if (Novice::CheckHitKey(DIK_SPACE))
+		/*if (Novice::CheckHitKey(DIK_SPACE))
 		{
 			if (!homing[i].isLaserActive)
 			{
@@ -145,7 +145,7 @@ void Bezier::Move() {
 				homing[i].isLaserActive = true;
 				
 			}
-		}
+		}*/
 
 
 	}
