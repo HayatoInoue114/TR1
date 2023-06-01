@@ -165,7 +165,8 @@ void Bezier::Move() {
 			P12.x = (1.0f - homing[i].t) * homing[i].midPoint.x + homing[i].t * homing[i].endPoint.x;
 			P12.y = (1.0f - homing[i].t) * homing[i].midPoint.y + homing[i].t * homing[i].endPoint.y;
 
-			P02.x = (1.0f - homing[i].t) * P01.x + homing[i].t * P12.x; P02.y = (1.0f - homing[i].t) * P01.y + homing[i].t * P12.y;
+			P02.x = (1.0f - homing[i].t) * P01.x + homing[i].t * P12.x;
+			P02.y = (1.0f - homing[i].t) * P01.y + homing[i].t * P12.y;
 
 			if (count % countNum == 0) {
 				homing[i].x = (int)P02.x;
@@ -199,7 +200,8 @@ void Bezier::Move() {
 		P12.y = (1.0f - homing[i].t) * homing[i].midPoint.y + homing[i].t * homing[i].endPoint.y;
 
 
-		P02.x = (1.0f - homing[i].t) * P01.x + homing[i].t * P12.x; P02.y = (1.0f - homing[i].t) * P01.y + homing[i].t * P12.y;
+		P02.x = (1.0f - homing[i].t) * P01.x + homing[i].t * P12.x; 
+		P02.y = (1.0f - homing[i].t) * P01.y + homing[i].t * P12.y;
 
 
 		homing[i].x = (int)P02.x;
