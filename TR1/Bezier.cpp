@@ -104,11 +104,13 @@ void Bezier::Move() {
 				homing[i].DivNum = DivNum;
 				homing[i].startPoint.x = block1.pos.x + GetRandom(0.0f, block1.size.x);
 				homing[i].startPoint.y = block1.pos.y;
+
+				//制御点をいじる場所
 				if (player.x >= homing[i].startPoint.x) {
-					homing[i].midPoint.x = player.x - GetRandom(50,500);
+					homing[i].midPoint.x = player.x - GetRandom(200,600);
 				}
 				if (player.x <= homing[i].startPoint.x) {
-					homing[i].midPoint.x = player.x + GetRandom(50, 500);
+					homing[i].midPoint.x = player.x + GetRandom(200, 600);
 				}
 				homing[i].midPoint.y = player.y + GetRandom(300,700);
 				homing[i].endPoint.x = player.x;
@@ -192,7 +194,7 @@ void Bezier::Move() {
 				if (homing[i].Counter == homing[i].DivNum && !isSecond)
 				{
 					homing[i].Counter = 0;
-					homing[i].isLaserActive = false;//存在を無に
+					homing[i].isLaserActive = false;//存在を無くす
 				}
 				
 
@@ -332,18 +334,21 @@ void Bezier::Draw() {
 	Novice::DrawBox(block1.pos.x, block1.pos.y, block1.size.x, block1.size.y, 0, WHITE, kFillModeSolid);//敵表示
 
 	for (int i = 0; i < HOMINGMAX; i++) {
-		////制御点
-		//Novice::DrawEllipse(homing[i].startPoint.x, homing[i].startPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
-		//Novice::DrawEllipse(homing[i].midPoint.x, homing[i].midPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
-		//Novice::DrawEllipse(homing[i].endPoint.x, homing[i].endPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
+		//制御点
+		Novice::DrawEllipse(homing[i].startPoint.x, homing[i].startPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
+		Novice::DrawEllipse(homing[i].midPoint.x, homing[i].midPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
+		Novice::DrawEllipse(homing[i].endPoint.x, homing[i].endPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
 
-		////制御点同士を結んだ線
-		//Novice::DrawLine(homing[i].startPoint.x, homing[i].startPoint.y, homing[i].midPoint.x, homing[i].midPoint.y, WHITE);
-		//Novice::DrawLine(homing[i].midPoint.x, homing[i].midPoint.y, homing[i].endPoint.x, homing[i].endPoint.y, WHITE);
+		//制御点同士を結んだ線
+		Novice::DrawLine(homing[i].startPoint.x, homing[i].startPoint.y, homing[i].midPoint.x, homing[i].midPoint.y, WHITE);
+		Novice::DrawLine(homing[i].midPoint.x, homing[i].midPoint.y, homing[i].endPoint.x, homing[i].endPoint.y, WHITE);
 
 		///*Novice::DrawEllipse(homing[i].t, homing[i].t, 5, 5, 0, RED, kFillModeSolid);*/
 	}
 
+
+	Novice::ScreenPrintf(0, 0, "SPACE : Fire");
+	Novice::ScreenPrintf(0, 20, "WASD : Player");
 	////t同士を結んだ線
 	//Novice::DrawLine(P01.x, P01.y, P12.x, P12.y, WHITE);
 	//Novice::DrawLine(P12.x, P12.y, P02.x, P02.y, WHITE);
