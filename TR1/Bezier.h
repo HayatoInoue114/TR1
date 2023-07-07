@@ -1,6 +1,6 @@
 #include "MT.h"
 
-#define HOMINGMAX 10//ホーミング総数
+#define HOMINGMAX 1//ホーミング総数
 #define HOMINGTRAILMAX 300//残像ホーミング総数
 
 const int kWindowWidth = 1280;
@@ -35,6 +35,8 @@ private:
 
 		// 制御点
 		Vector2 startPoint, midPoint, endPoint;
+
+		Vector2 tmpMidVector;
 		bool isLaserActive;//レーザーの有無
 	};
 
@@ -43,6 +45,7 @@ private:
 	Player homingTrail[HOMINGTRAILMAX];
 	bool isHomingTrail[HOMINGTRAILMAX];
 	homing_t homing[HOMINGMAX];
+	homing_t homing2[HOMINGMAX];
 
 	//制御点
 	Vector2 P01, P12, P02;
