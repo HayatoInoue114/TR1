@@ -1,6 +1,6 @@
 #include "MT.h"
 
-#define HOMINGMAX 1//ホーミング総数
+#define HOMINGMAX 10//ホーミング総数
 #define HOMINGTRAILMAX 300//残像ホーミング総数
 
 const int kWindowWidth = 1280;
@@ -42,6 +42,7 @@ private:
 
 	//構造体宣言
 	Player player;
+	Player prePlayer;
 	Player homingTrail[HOMINGTRAILMAX];
 	bool isHomingTrail[HOMINGTRAILMAX];
 	homing_t homing[HOMINGMAX];

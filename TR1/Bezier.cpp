@@ -248,6 +248,8 @@ void Bezier::Move() {
 			homing2[i].midPoint.x = homing2[i].startPoint.x + homing2[i].tmpMidVector.x;
 			homing2[i].midPoint.y = homing2[i].startPoint.y + homing2[i].tmpMidVector.y;
 
+			
+
 			homing2[i].endPoint.x = player.x;
 			homing2[i].endPoint.y = player.y + 5;
 
@@ -370,13 +372,13 @@ void Bezier::Move() {
 
 void Bezier::Draw() {
 	
-	//for (int i = 0; i < HOMINGMAX; i++) {
-	//	if (homing[i].isLaserActive) {
-	//		Novice::DrawEllipse(homing[i].x, homing[i].y, 20, 20, 0, RED, kFillModeSolid);
-	//		Novice::DrawEllipse(homing2[i].x, homing2[i].y, 20, 20, 0, RED, kFillModeSolid);
-	//		/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, RED);*/
-	//	}
-	//}
+	for (int i = 0; i < HOMINGMAX; i++) {
+		if (homing[i].isLaserActive) {
+			/*Novice::DrawEllipse(homing[i].x, homing[i].y, 20, 20, 0, RED, kFillModeSolid);
+			Novice::DrawEllipse(homing2[i].x, homing2[i].y, 20, 20, 0, RED, kFillModeSolid);*/
+			/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, RED);*/
+		}
+	}
 	
 	for (int i = 0; i < HOMINGTRAILMAX; i++) {
 		if (isHomingTrail[i]) {
