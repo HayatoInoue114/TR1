@@ -78,6 +78,8 @@ private:
 
 	float midAdjustValue;
 	float endAdjustValue;
+
+	int setFrame;
 };
 
 
