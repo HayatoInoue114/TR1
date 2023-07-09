@@ -36,7 +36,7 @@ private:
 		// 制御点
 		Vector2 startPoint, midPoint, endPoint;
 
-		Vector2 tmpMidVector;
+		Vector2 tmpMidVector,tmpEndVector;
 		bool isLaserActive;//レーザーの有無
 	};
 
@@ -75,6 +75,9 @@ private:
 	bool isLeft;
 
 	int size;
+
+	float midAdjustValue;
+	float endAdjustValue;
 };
 
 

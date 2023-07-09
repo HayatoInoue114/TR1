@@ -56,7 +56,8 @@ Bezier::Bezier()
 	P01, P12, P02 = {};
 
 	textureHandle = Novice::LoadTexture("./Resource./ball.png");
-	
+	midAdjustValue = 0.6f;
+	endAdjustValue = 1.3f;
 }
 
 Bezier::~Bezier() {
@@ -105,6 +106,9 @@ void Bezier::Move() {
 	{//ホーミング弾出現処理
 		if (Novice::CheckHitKey(DIK_SPACE))
 		{
+			prePlayer = player;
+			
+
 			if (!homing[i].isLaserActive && !homing2[i].isLaserActive)
 			{
 				homing[i].x = 0;
@@ -128,7 +132,7 @@ void Bezier::Move() {
 				homing[i].endPoint.y = player.y + 5;
 				homing[i].isLaserActive = true;
 
-
+				
 			}
 		}
 
@@ -232,6 +236,7 @@ void Bezier::Move() {
 	{
 		if (!homing2[i].isLaserActive && isSecond)
 		{
+			homing2[i].tmpEndVector = { player.x - prePlayer.x , player.y - prePlayer.y };
 			homing2[i].x = 0;
 			homing2[i].y = 0;
 			homing2[i].t = 0;
@@ -245,17 +250,17 @@ void Bezier::Move() {
 			homing2[i].tmpMidVector.x = homing[i].endPoint.x - homing[i].midPoint.x;
 			homing2[i].tmpMidVector.y = homing[i].endPoint.y - homing[i].midPoint.y;
 
-			homing2[i].midPoint.x = homing2[i].startPoint.x + homing2[i].tmpMidVector.x;
-			homing2[i].midPoint.y = homing2[i].startPoint.y + homing2[i].tmpMidVector.y;
+			homing2[i].midPoint.x = homing2[i].startPoint.x + homing2[i].tmpMidVector.x * midAdjustValue;
+			homing2[i].midPoint.y = homing2[i].startPoint.y + homing2[i].tmpMidVector.y * midAdjustValue;
 
 			
 
-			homing2[i].endPoint.x = player.x;
-			homing2[i].endPoint.y = player.y + 5;
+			homing2[i].endPoint.x = player.x + homing2[i].tmpEndVector.x * endAdjustValue;
+			homing2[i].endPoint.y = player.y + homing2[i].tmpEndVector.y * endAdjustValue;
 
 			homing2[i].isLaserActive = true;
 
-
+			
 		}
 
 
@@ -269,7 +274,6 @@ void Bezier::Move() {
 
 				P12.x = (1.0f - homing2[i].t) * homing2[i].midPoint.x + homing2[i].t * homing2[i].endPoint.x;
 				P12.y = (1.0f - homing2[i].t) * homing2[i].midPoint.y + homing2[i].t * homing2[i].endPoint.y;
-
 
 				P02.x = (1.0f - homing2[i].t) * P01.x + homing2[i].t * P12.x;
 				P02.y = (1.0f - homing2[i].t) * P01.y + homing2[i].t * P12.y;
