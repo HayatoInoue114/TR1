@@ -69,8 +69,8 @@ Bezier::Bezier()
 	//周回用フラグ
 	isAround = false;
 
-	//どこまで追跡するかの規定値
-	trackingAdjustValue = 0.9f;
+	//ホーミング強度
+	trackingValue = 0.8f;
 }
 
 Bezier::~Bezier() {
@@ -371,12 +371,12 @@ void Bezier::Move() {
 
 	////////////////////////////////ここでプレイヤーを追跡///////////////////////////////////////
 	for (int i = 0; i < HOMINGMAX; i++) {
-		if (homing[i].t <= trackingAdjustValue ) {
+		if (homing[i].t <= trackingValue ) {
 			homing[i].endPoint.x = player.x;
 			homing[i].endPoint.y = player.y + 5;
 			
 		}
-		if (homing2[i].t <= trackingAdjustValue) {
+		if (homing2[i].t <= trackingValue) {
 			homing2[i].endPoint.x = player.x;
 			homing2[i].endPoint.y = player.y + 5;
 		}
@@ -450,7 +450,7 @@ void Bezier::Draw() {
 	//残像
 	for (int i = 0; i < HOMINGTRAILMAX; i++) {
 		if (isHomingTrail[i]) {
-			/*Novice::DrawEllipse(homingTrail[i].x, homingTrail[i].y, 10, 10, 0, BLUE, kFillModeSolid);*/
+			Novice::DrawEllipse(homingTrail[i].x, homingTrail[i].y, 10, 10, 0, BLUE, kFillModeSolid);
 			/*Novice::DrawSprite(homingTrail[i].x, homingTrail[i].y, textureHandle, 1, 1, 0, WHITE);*/
 		}
 	}
@@ -460,24 +460,24 @@ void Bezier::Draw() {
 	Novice::DrawEllipse(player.x, player.y, size, size, 0, WHITE, kFillModeSolid);//自機表示
 	Novice::DrawBox(block1.pos.x, block1.pos.y, block1.size.x, block1.size.y, 0, WHITE, kFillModeSolid);//敵表示
 
-	//for (int i = 0; i < HOMINGMAX; i++) {
-	//	//制御点
-	//	Novice::DrawEllipse(homing[i].startPoint.x, homing[i].startPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
-	//	Novice::DrawEllipse(homing[i].midPoint.x, homing[i].midPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
-	//	Novice::DrawEllipse(homing[i].endPoint.x, homing[i].endPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
+	for (int i = 0; i < HOMINGMAX; i++) {
+		//制御点
+		Novice::DrawEllipse(homing[i].startPoint.x, homing[i].startPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
+		Novice::DrawEllipse(homing[i].midPoint.x, homing[i].midPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
+		Novice::DrawEllipse(homing[i].endPoint.x, homing[i].endPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
 
-	//	Novice::DrawEllipse(homing2[i].startPoint.x, homing2[i].startPoint.y, 5, 5, 0.0f, BLUE, kFillModeSolid);
-	//	Novice::DrawEllipse(homing2[i].midPoint.x, homing2[i].midPoint.y, 5, 5, 0.0f, BLUE, kFillModeSolid);
-	//	Novice::DrawEllipse(homing2[i].endPoint.x, homing2[i].endPoint.y, 5, 5, 0.0f, BLUE, kFillModeSolid);
+		Novice::DrawEllipse(homing2[i].startPoint.x, homing2[i].startPoint.y, 5, 5, 0.0f, BLUE, kFillModeSolid);
+		Novice::DrawEllipse(homing2[i].midPoint.x, homing2[i].midPoint.y, 5, 5, 0.0f, BLUE, kFillModeSolid);
+		Novice::DrawEllipse(homing2[i].endPoint.x, homing2[i].endPoint.y, 5, 5, 0.0f, BLUE, kFillModeSolid);
 
-	//	//制御点同士を結んだ線
-	//	Novice::DrawLine(homing[i].startPoint.x, homing[i].startPoint.y, homing[i].midPoint.x, homing[i].midPoint.y, RED);
-	//	Novice::DrawLine(homing[i].midPoint.x, homing[i].midPoint.y, homing[i].endPoint.x, homing[i].endPoint.y, RED);
+		//制御点同士を結んだ線
+		Novice::DrawLine(homing[i].startPoint.x, homing[i].startPoint.y, homing[i].midPoint.x, homing[i].midPoint.y, RED);
+		Novice::DrawLine(homing[i].midPoint.x, homing[i].midPoint.y, homing[i].endPoint.x, homing[i].endPoint.y, RED);
 
-	//	Novice::DrawLine(homing2[i].startPoint.x, homing2[i].startPoint.y, homing2[i].midPoint.x, homing2[i].midPoint.y, BLUE);
-	//	Novice::DrawLine(homing2[i].midPoint.x, homing2[i].midPoint.y, homing2[i].endPoint.x, homing2[i].endPoint.y, BLUE);
-	//	/*Novice::DrawEllipse(homing[i].t, homing[i].t, 5, 5, 0, RED, kFillModeSolid);*/
-	//}
+		Novice::DrawLine(homing2[i].startPoint.x, homing2[i].startPoint.y, homing2[i].midPoint.x, homing2[i].midPoint.y, BLUE);
+		Novice::DrawLine(homing2[i].midPoint.x, homing2[i].midPoint.y, homing2[i].endPoint.x, homing2[i].endPoint.y, BLUE);
+		/*Novice::DrawEllipse(homing[i].t, homing[i].t, 5, 5, 0, RED, kFillModeSolid);*/
+	}
 
 
 	Novice::ScreenPrintf(0, 0, "SPACE : Fire");
