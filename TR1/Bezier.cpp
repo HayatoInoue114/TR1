@@ -98,10 +98,7 @@ void Bezier::Init() {
 }
 
 void Bezier::Update() {
-	if (Novice::CheckHitKey(DIK_UP) || Novice::CheckHitKey(DIK_DOWN) || Novice::CheckHitKey(DIK_LEFT) || Novice::CheckHitKey(DIK_RIGHT)) {
-		Move();
-	}
-	
+	Move();
 }
 
 void Bezier::Move() {
