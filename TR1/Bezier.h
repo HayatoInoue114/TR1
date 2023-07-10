@@ -44,6 +44,8 @@ private:
 	//構造体宣言
 	Player player;
 	Player prePlayer;
+	Player prePlayer2;
+	Player tmpPlayerVector;
 	Player homingTrail[HOMINGTRAILMAX];
 	bool isHomingTrail[HOMINGTRAILMAX];
 	homing_t homing[HOMINGMAX];
@@ -83,6 +85,7 @@ private:
 	float trackingValue;
 
 	int setFrame;
+	float midLimitValue;
 };
 
 

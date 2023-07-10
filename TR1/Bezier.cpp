@@ -70,7 +70,12 @@ Bezier::Bezier()
 	isAround = false;
 
 	//ホーミング強度
-	trackingValue = 0.8f;
+	trackingValue = 0.6f;
+
+	//midPointの限界値
+	midLimitValue = 400;
+
+
 }
 
 Bezier::~Bezier() {
@@ -202,6 +207,7 @@ void Bezier::Move() {
 
 		if (homing[i].isLaserActive)
 		{
+			prePlayer = player;
 			{//ベジェ曲線を描画
 				homing[i].t = (1.0f / homing[i].DivNum) * homing[i].Counter * homing[i].easingAdjustValue;
 
@@ -372,16 +378,41 @@ void Bezier::Move() {
 	////////////////////////////////ここでプレイヤーを追跡///////////////////////////////////////
 	for (int i = 0; i < HOMINGMAX; i++) {
 		if (homing[i].t <= trackingValue ) {
+			homing[i].tmpEndVector = { -1.0f ,-1.0f };
 			homing[i].endPoint.x = player.x;
-			homing[i].endPoint.y = player.y + 5;
-			
+			homing[i].endPoint.y = player.y;
 		}
 		if (homing2[i].t <= trackingValue) {
+			homing[i].tmpEndVector = { -1.0f ,-1.0f };
 			homing2[i].endPoint.x = player.x;
-			homing2[i].endPoint.y = player.y + 5;
+			homing2[i].endPoint.y = player.y;
+		}
+
+
+		if (homing[i].t >= trackingValue) {
+			tmpPlayerVector.x = player.x - prePlayer.x;
+			tmpPlayerVector.y = player.y - prePlayer.y;
+			homing[i].endPoint.x = player.x - tmpPlayerVector.x;
+			homing[i].endPoint.y = player.y - tmpPlayerVector.y;
+		}
+		if (homing2[i].t >= trackingValue) {
+			
+			homing[i].tmpEndVector.x -= 1.0f;
+			homing[i].tmpEndVector.y -= 1.0f;
+			homing2[i].endPoint.x = player.x;
+			homing2[i].endPoint.y = player.y;
+			homing[i].endPoint.x -= homing[i].tmpEndVector.x;
+			homing[i].endPoint.y -= homing[i].tmpEndVector.y;
 		}
 	}
 	
+
+	//制御点が広くなりすぎないように
+	for (int i = 0; i < HOMINGMAX; i++) {
+		if (homing[i].tmpMidVector.x >= midLimitValue || homing[i].tmpMidVector.y >= midLimitValue) {
+			midAdjustValue = 1.0f;
+		}
+	}
 
 
 
