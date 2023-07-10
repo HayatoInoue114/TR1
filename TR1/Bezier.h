@@ -1,6 +1,6 @@
 #include "MT.h"
 
-#define HOMINGMAX 10//ホーミング総数
+#define HOMINGMAX 5//ホーミング総数
 #define HOMINGTRAILMAX 300//残像ホーミング総数
 
 const int kWindowWidth = 1280;
