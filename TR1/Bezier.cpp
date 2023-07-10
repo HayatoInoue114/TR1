@@ -200,9 +200,6 @@ void Bezier::Move() {
 				homing[i].x = (int)P02.x;
 				homing[i].y = (int)P02.y;
 
-
-				/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);*/
-
 				homing[i].Counter++;
 
 
@@ -282,20 +279,21 @@ void Bezier::Move() {
 				homing2[i].x = (int)P02.x;
 				homing2[i].y = (int)P02.y;
 
-
-				/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);*/
-
 				homing2[i].Counter++;
 
 
 
-				// もしカウンターが分割数に達していたら０に戻す
-				if (homing2[i].Counter == homing2[i].DivNum)
+				// もしtが1より大きくなったらベクトルを保持したままにする
+				if (homing2[i].t >= 1.0f)
 				{
-					homing2[i].Counter = 0;
-					homing2[i].isLaserActive = false;//存在を無くす
 					isSecond = false;
+
+					if (homing2[i].x >= kWindowWidth || homing[i].x <= 0 || homing2[i].y >= kWindowHeight || homing2[i].y <= 0) {
+						homing2[i].isLaserActive = false;//存在を無くす
+					}
 				}
+
+				
 
 
 
