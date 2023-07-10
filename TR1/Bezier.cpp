@@ -70,7 +70,7 @@ Bezier::Bezier()
 	isAround = false;
 
 	//ホーミング強度
-	trackingValue = 0.6f;
+	trackingValue = 0.8f;
 
 	//midPointの限界値
 	midLimitValue = 400;
@@ -389,7 +389,7 @@ void Bezier::Move() {
 		}
 
 
-		if (homing[i].t >= trackingValue) {
+		/*if (homing[i].t >= trackingValue) {
 			tmpPlayerVector.x = player.x - prePlayer.x;
 			tmpPlayerVector.y = player.y - prePlayer.y;
 			homing[i].endPoint.x = player.x - tmpPlayerVector.x;
@@ -403,7 +403,7 @@ void Bezier::Move() {
 			homing2[i].endPoint.y = player.y;
 			homing[i].endPoint.x -= homing[i].tmpEndVector.x;
 			homing[i].endPoint.y -= homing[i].tmpEndVector.y;
-		}
+		}*/
 	}
 	
 
@@ -481,7 +481,7 @@ void Bezier::Draw() {
 	//残像
 	for (int i = 0; i < HOMINGTRAILMAX; i++) {
 		if (isHomingTrail[i]) {
-			Novice::DrawEllipse(homingTrail[i].x, homingTrail[i].y, 10, 10, 0, BLUE, kFillModeSolid);
+		/*	Novice::DrawEllipse(homingTrail[i].x, homingTrail[i].y, 10, 10, 0, BLUE, kFillModeSolid);*/
 			/*Novice::DrawSprite(homingTrail[i].x, homingTrail[i].y, textureHandle, 1, 1, 0, WHITE);*/
 		}
 	}
