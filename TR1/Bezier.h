@@ -38,6 +38,7 @@ private:
 
 		Vector2 tmpMidVector,tmpEndVector;
 		bool isLaserActive;//レーザーの有無
+		float easingAdjustValue;
 	};
 
 	//構造体宣言
