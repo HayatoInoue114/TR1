@@ -8,7 +8,7 @@ Excellence::Excellence()
 	player.y = 200;
 
 	//変数初期化
-	for (int i = 0; i < HOMINGMAX; i++)
+	for (int i = 0; i < EXCELLENCEHOMINGMAX; i++)
 	{
 		homing[i].x = 0;
 		homing[i].y = 0;
@@ -43,7 +43,7 @@ Excellence::Excellence()
 	count = 0;
 	countNum = 1;
 	preKey = false;
-	for (int i = 0; i < HOMINGTRAILMAX; i++) {
+	for (int i = 0; i < EXCELLENCEHOMINGTRAILMAX; i++) {
 		homingTrail[i] = {};
 		isHomingTrail[i] = false;
 		cd[i] = 0;
@@ -88,7 +88,7 @@ void Excellence::Init() {
 	//player.y = 400;
 
 	////変数初期化
-	//for (int i = 0; i < HOMINGMAX; i++)
+	//for (int i = 0; i < EXCELLENCEHOMINGMAX; i++)
 	//{
 	//	homing[i].x = 0;
 	//	homing[i].y = 0;
@@ -120,7 +120,7 @@ void Excellence::Update() {
 void Excellence::Move() {
 	count++;
 
-	for (int i = 0; i < HOMINGMAX; i++)
+	for (int i = 0; i < EXCELLENCEHOMINGMAX; i++)
 	{//ホーミング弾出現処理
 		if (Novice::CheckHitKey(DIK_SPACE))
 		{
@@ -161,7 +161,7 @@ void Excellence::Move() {
 	}
 
 	/*// 軌跡
-	//for (int i = 0; i < HOMINGMAX; i++)
+	//for (int i = 0; i < EXCELLENCEHOMINGMAX; i++)
 	//{
 	//	if (!homing[i].isLaserActive) continue;
 	//	if (homing[i].isLaserActive)
@@ -201,7 +201,7 @@ void Excellence::Move() {
 
 
 	//1個目の軌道/////////////////////////////////////////
-	for (int i = 0; i < HOMINGMAX; i++)
+	for (int i = 0; i < EXCELLENCEHOMINGMAX; i++)
 	{
 		
 
@@ -241,7 +241,7 @@ void Excellence::Move() {
 			
 
 
-				for (int j = 0; j < HOMINGTRAILMAX; j++) {
+				for (int j = 0; j < EXCELLENCEHOMINGTRAILMAX; j++) {
 					if (count % countNum == 0 && !isHomingTrail[j]) {
 						homingTrail[j].x = homing[i].x;
 						homingTrail[j].y = homing[i].y;
@@ -256,7 +256,7 @@ void Excellence::Move() {
 
 
 	///////////////////////2個目の軌道/////////////////////////////////////////
-	for (int i = 0; i < HOMINGMAX; i++)
+	for (int i = 0; i < EXCELLENCEHOMINGMAX; i++)
 	{
 		if (!homing2[i].isLaserActive && isSecond)
 		{
@@ -324,7 +324,7 @@ void Excellence::Move() {
 
 
 
-				for (int j = 0; j < HOMINGTRAILMAX; j++) {
+				for (int j = 0; j < EXCELLENCEHOMINGTRAILMAX; j++) {
 					if (count % countNum == 0 && !isHomingTrail[j]) {
 						homingTrail[j].x = homing2[i].x;
 						homingTrail[j].y = homing2[i].y;
@@ -364,7 +364,7 @@ void Excellence::Move() {
 	}
 
 	//残像が生きているか
-	for (int j = 0; j < HOMINGTRAILMAX; j++) {
+	for (int j = 0; j < EXCELLENCEHOMINGTRAILMAX; j++) {
 		if (isHomingTrail[j]) {
 			cd[j]++;
 		}
@@ -376,7 +376,7 @@ void Excellence::Move() {
 	}
 
 	////////////////////////////////ここでプレイヤーを追跡///////////////////////////////////////
-	for (int i = 0; i < HOMINGMAX; i++) {
+	for (int i = 0; i < EXCELLENCEHOMINGMAX; i++) {
 		if (homing[i].t <= trackingValue ) {
 			homing[i].tmpEndVector = { -1.0f ,-1.0f };
 			homing[i].endPoint.x = player.x;
@@ -408,7 +408,7 @@ void Excellence::Move() {
 	
 
 	//制御点が広くなりすぎないように
-	for (int i = 0; i < HOMINGMAX; i++) {
+	for (int i = 0; i < EXCELLENCEHOMINGMAX; i++) {
 		if (homing[i].tmpMidVector.x >= midLimitValue || homing[i].tmpMidVector.y >= midLimitValue) {
 			midAdjustValue = 1.0f;
 		}
@@ -466,7 +466,7 @@ void Excellence::Move() {
 void Excellence::Draw() {
 	
 	//ホーミング弾
-	for (int i = 0; i < HOMINGMAX; i++) {
+	for (int i = 0; i < EXCELLENCEHOMINGMAX; i++) {
 		if (homing[i].isLaserActive) {
 			Novice::DrawEllipse(homing[i].x, homing[i].y, 20, 20, 0, RED, kFillModeSolid);
 			/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, RED);*/
@@ -479,7 +479,7 @@ void Excellence::Draw() {
 	
 
 	//残像
-	for (int i = 0; i < HOMINGTRAILMAX; i++) {
+	for (int i = 0; i < EXCELLENCEHOMINGTRAILMAX; i++) {
 		if (isHomingTrail[i]) {
 			Novice::DrawEllipse(homingTrail[i].x, homingTrail[i].y, 10, 10, 0, BLUE, kFillModeSolid);
 			/*Novice::DrawSprite(homingTrail[i].x, homingTrail[i].y, textureHandle, 1, 1, 0, WHITE);*/
@@ -491,7 +491,7 @@ void Excellence::Draw() {
 	Novice::DrawEllipse(player.x, player.y, size, size, 0, WHITE, kFillModeSolid);//自機表示
 	Novice::DrawBox(block1.pos.x, block1.pos.y, block1.size.x, block1.size.y, 0, WHITE, kFillModeSolid);//敵表示
 
-	for (int i = 0; i < HOMINGMAX; i++) {
+	for (int i = 0; i < EXCELLENCEHOMINGMAX; i++) {
 		//制御点
 		Novice::DrawEllipse(homing[i].startPoint.x, homing[i].startPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
 		Novice::DrawEllipse(homing[i].midPoint.x, homing[i].midPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);

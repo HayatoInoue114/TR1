@@ -1,10 +1,8 @@
 #include "MT.h"
 
-#define HOMINGMAX 5//ホーミング総数
-#define HOMINGTRAILMAX 300//残像ホーミング総数
+#define PRODIGYHOMINGMAX 5//ホーミング総数
+#define PRODIGYHOMINGTRAILMAX 300//残像ホーミング総数
 
-const int kWindowWidth = 1280;
-const int kWindowHeight = 720;
 
 class Prodigy
 {
@@ -44,10 +42,10 @@ private:
 	//構造体宣言
 	Player player;
 	Player prePlayer;
-	Player homingTrail[HOMINGTRAILMAX];
-	bool isHomingTrail[HOMINGTRAILMAX];
-	homing_t homing[HOMINGMAX];
-	homing_t homing2[HOMINGMAX];
+	Player homingTrail[PRODIGYHOMINGTRAILMAX];
+	bool isHomingTrail[PRODIGYHOMINGTRAILMAX];
+	homing_t homing[PRODIGYHOMINGMAX];
+	homing_t homing2[PRODIGYHOMINGMAX];
 
 	//制御点
 	Vector2 P01, P12, P02;
@@ -67,7 +65,7 @@ private:
 
 	int count;
 	int countNum;
-	int cd[HOMINGTRAILMAX];
+	int cd[PRODIGYHOMINGTRAILMAX];
 	bool preKey;
 	bool isSecond;
 

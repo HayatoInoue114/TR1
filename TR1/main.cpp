@@ -1,4 +1,4 @@
-#include "Excellence.h"
+#include "GameManager.h"
 
 const char kWindowTitle[] = "学籍番号";
 
@@ -9,11 +9,16 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	// ライブラリの初期化
 	Novice::Initialize(kWindowTitle, kWindowWidth, kWindowHeight);
 
+	GameManager* gameManager = new GameManager;
 	Excellence* excellence = new Excellence;
+	Underachiever* underachiever = new Underachiever;
+	Prodigy* prodigy = new Prodigy;
 
 	// キー入力結果を受け取る箱
 	char keys[256] = {0};
 	char preKeys[256] = {0};
+
+	gameManager->Init(excellence, underachiever, prodigy);
 
 	// ウィンドウの×ボタンが押されるまでループ
 	while (Novice::ProcessMessage() == 0) {
@@ -27,7 +32,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓更新処理ここから
 		///
-		excellence->Update();
+		gameManager->Update();
 		///
 		/// ↑更新処理ここまで
 		///
@@ -35,7 +40,9 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 		///
 		/// ↓描画処理ここから
 		///
-		excellence->Draw();
+		gameManager->Draw();
+
+		Novice::ScreenPrintf(0, 50, "ModeChange : M");
 		///
 		/// ↑描画処理ここまで
 		///

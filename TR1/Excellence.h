@@ -3,8 +3,6 @@
 #define EXCELLENCEHOMINGMAX 5//ホーミング総数
 #define EXCELLENCEHOMINGTRAILMAX 300//残像ホーミング総数
 
-const int kWindowWidth = 1280;
-const int kWindowHeight = 720;
 
 class Excellence
 {
@@ -46,10 +44,10 @@ private:
 	Player prePlayer;
 	Player prePlayer2;
 	Player tmpPlayerVector;
-	Player homingTrail[HOMINGTRAILMAX];
-	bool isHomingTrail[HOMINGTRAILMAX];
-	homing_t homing[HOMINGMAX];
-	homing_t homing2[HOMINGMAX];
+	Player homingTrail[EXCELLENCEHOMINGTRAILMAX];
+	bool isHomingTrail[EXCELLENCEHOMINGTRAILMAX];
+	homing_t homing[EXCELLENCEHOMINGMAX];
+	homing_t homing2[EXCELLENCEHOMINGMAX];
 
 	//制御点
 	Vector2 P01, P12, P02;
@@ -69,7 +67,7 @@ private:
 
 	int count;
 	int countNum;
-	int cd[HOMINGTRAILMAX];
+	int cd[EXCELLENCEHOMINGTRAILMAX];
 	bool preKey;
 	bool isSecond;
 	bool isAround;

@@ -5,6 +5,9 @@
 #include<time.h>
 #include<Vector2.h>
 
+const int kWindowWidth = 1280;
+const int kWindowHeight = 720;
+
 
 float Clamp(float number, float min, float max);
 

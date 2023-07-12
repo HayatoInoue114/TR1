@@ -1,14 +1,14 @@
-#include"Bezier.h"
+#include"Underachiever.h"
 
 
-Bezier::Bezier()
+Underachiever::Underachiever()
 {
 	//自機座標
-	player.x = 100;
+	player.x = kWindowWidth / 2;
 	player.y = 200;
 
 	//変数初期化
-	for (int i = 0; i < HOMINGMAX; i++)
+	for (int i = 0; i < UNDERCHIEVERHOMINGMAX; i++)
 	{
 		homing[i].x = 0;
 		homing[i].y = 0;
@@ -30,7 +30,7 @@ Bezier::Bezier()
 	count = 0;
 	countNum = 1;
 	preKey = false;
-	for (int i = 0; i < HOMINGTRAILMAX; i++) {
+	for (int i = 0; i < UNDERCHIEVERHOMINGTRAILMAX; i++) {
 		homingTrail[i] = {};
 		isHomingTrail[i] = false;
 		cd[i] = 0;
@@ -48,17 +48,17 @@ Bezier::Bezier()
 
 }
 
-Bezier::~Bezier() {
+Underachiever::~Underachiever() {
 
 }
 
-void Bezier::Init() {
+void Underachiever::Init() {
 	////自機座標
 	//player.x = 400;
 	//player.y = 400;
 
 	////変数初期化
-	//for (int i = 0; i < HOMINGMAX; i++)
+	//for (int i = 0; i < UNDERCHIEVERHOMINGMAX; i++)
 	//{
 	//	homing[i].x = 0;
 	//	homing[i].y = 0;
@@ -83,14 +83,14 @@ void Bezier::Init() {
 	//isSecond = false;
 }
 
-void Bezier::Update() {
+void Underachiever::Update() {
 	Move();
 }
 
-void Bezier::Move() {
+void Underachiever::Move() {
 	count++;
 
-	for (int i = 0; i < HOMINGMAX; i++)
+	for (int i = 0; i < UNDERCHIEVERHOMINGMAX; i++)
 	{//ホーミング弾出現処理
 		if (Novice::CheckHitKey(DIK_SPACE))
 		{
@@ -145,7 +145,7 @@ void Bezier::Move() {
 
 	// 軌跡
 
-	for (int i = 0; i < HOMINGMAX; i++)
+	for (int i = 0; i < UNDERCHIEVERHOMINGMAX; i++)
 	{
 		if (!homing[i].isLaserActive) continue;
 		if (homing[i].isLaserActive)
@@ -183,7 +183,7 @@ void Bezier::Move() {
 	}
 
 
-	for (int i = 0; i < HOMINGMAX; i++)
+	for (int i = 0; i < UNDERCHIEVERHOMINGMAX; i++)
 	{
 
 		if (homing[i].isLaserActive)
@@ -237,7 +237,7 @@ void Bezier::Move() {
 				}
 
 
-				for (int j = 0; j < HOMINGTRAILMAX; j++) {
+				for (int j = 0; j < UNDERCHIEVERHOMINGTRAILMAX; j++) {
 					if (count % countNum == 0 && !isHomingTrail[j]) {
 						homingTrail[j].x = homing[i].x;
 						homingTrail[j].y = homing[i].y;
@@ -278,7 +278,7 @@ void Bezier::Move() {
 	}
 
 
-	for (int j = 0; j < HOMINGTRAILMAX; j++) {
+	for (int j = 0; j < UNDERCHIEVERHOMINGTRAILMAX; j++) {
 		if (isHomingTrail[j]) {
 			cd[j]++;
 		}
@@ -306,7 +306,7 @@ void Bezier::Move() {
 		isLeft = true;
 	}
 	if (Novice::CheckHitKey(DIK_RIGHT)) {
-		player.x += 15;
+		player.x += 5;
 		isMove = true;
 		isRight = true;
 	}
@@ -339,16 +339,16 @@ void Bezier::Move() {
 	}
 }
 
-void Bezier::Draw() {
+void Underachiever::Draw() {
 
-	for (int i = 0; i < HOMINGMAX; i++) {
+	for (int i = 0; i < UNDERCHIEVERHOMINGMAX; i++) {
 		if (homing[i].isLaserActive) {
 			Novice::DrawEllipse(homing[i].x, homing[i].y, 20, 20, 0, RED, kFillModeSolid);
 			/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, RED);*/
 		}
 	}
 
-	for (int i = 0; i < HOMINGTRAILMAX; i++) {
+	for (int i = 0; i < UNDERCHIEVERHOMINGTRAILMAX; i++) {
 		if (isHomingTrail[i]) {
 			Novice::DrawEllipse(homingTrail[i].x, homingTrail[i].y, 20, 20, 0, BLUE, kFillModeSolid);
 			/*Novice::DrawSprite(homingTrail[i].x, homingTrail[i].y, textureHandle, 1, 1, 0, WHITE);*/
@@ -360,7 +360,7 @@ void Bezier::Draw() {
 	Novice::DrawEllipse(player.x, player.y, size, size, 0, WHITE, kFillModeSolid);//自機表示
 	Novice::DrawBox(block1.pos.x, block1.pos.y, block1.size.x, block1.size.y, 0, WHITE, kFillModeSolid);//敵表示
 
-	for (int i = 0; i < HOMINGMAX; i++) {
+	for (int i = 0; i < UNDERCHIEVERHOMINGMAX; i++) {
 		//制御点
 		Novice::DrawEllipse(homing[i].startPoint.x, homing[i].startPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
 		Novice::DrawEllipse(homing[i].midPoint.x, homing[i].midPoint.y, 5, 5, 0.0f, RED, kFillModeSolid);
