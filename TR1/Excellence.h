@@ -1,16 +1,16 @@
 #include "MT.h"
 
-#define HOMINGMAX 5//ホーミング総数
-#define HOMINGTRAILMAX 300//残像ホーミング総数
+#define EXCELLENCEHOMINGMAX 5//ホーミング総数
+#define EXCELLENCEHOMINGTRAILMAX 300//残像ホーミング総数
 
 const int kWindowWidth = 1280;
 const int kWindowHeight = 720;
 
-class Bezier
+class Excellence
 {
 public:
-	Bezier();
-	~Bezier();
+	Excellence();
+	~Excellence();
 	void Init();
 	void Update();
 	void Move();

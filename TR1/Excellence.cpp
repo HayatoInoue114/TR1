@@ -1,7 +1,7 @@
-#include"Bezier.h"
+#include"Excellence.h"
 
 
-Bezier::Bezier()
+Excellence::Excellence()
 {
 	//自機座標
 	player.x = kWindowWidth / 2;
@@ -78,11 +78,11 @@ Bezier::Bezier()
 
 }
 
-Bezier::~Bezier() {
+Excellence::~Excellence() {
 
 }
 
-void Bezier::Init() {
+void Excellence::Init() {
 	////自機座標
 	//player.x = 400;
 	//player.y = 400;
@@ -113,11 +113,11 @@ void Bezier::Init() {
 	//isSecond = false;
 }
 
-void Bezier::Update() {
+void Excellence::Update() {
 	Move();
 }
 
-void Bezier::Move() {
+void Excellence::Move() {
 	count++;
 
 	for (int i = 0; i < HOMINGMAX; i++)
@@ -463,7 +463,7 @@ void Bezier::Move() {
 	}
 }
 
-void Bezier::Draw() {
+void Excellence::Draw() {
 	
 	//ホーミング弾
 	for (int i = 0; i < HOMINGMAX; i++) {

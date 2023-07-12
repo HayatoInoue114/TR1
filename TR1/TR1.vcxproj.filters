@@ -17,17 +17,23 @@
     <Filter Include="KamataEngine\ヘッダー">
       <UniqueIdentifier>{2839616d-7f3b-43a5-9d4d-f070953c782f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="KamataEngine\ヘッダー\Bezier">
-      <UniqueIdentifier>{840fe4e1-89f1-454e-9316-b45a9c87d9f7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="KamataEngine\ヘッダー\MT">
       <UniqueIdentifier>{39458729-d005-485a-9f7e-728b16a10537}</UniqueIdentifier>
     </Filter>
     <Filter Include="KamataEngine\Source\MT">
       <UniqueIdentifier>{72b22940-86fb-4610-bf7b-3bf44caf2d9e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="KamataEngine\Source\Bezier">
+    <Filter Include="KamataEngine\Source\Excellence">
       <UniqueIdentifier>{7fe2d796-8bbf-432d-8753-693f15a3ffcd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KamataEngine\ヘッダー\Excellence">
+      <UniqueIdentifier>{840fe4e1-89f1-454e-9316-b45a9c87d9f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KamataEngine\Source\Prodigy">
+      <UniqueIdentifier>{dce7377e-cde9-43ca-be54-360a93f44667}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KamataEngine\ヘッダー\Prodigy">
+      <UniqueIdentifier>{86aca06d-2616-4278-883f-f746b771e322}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -50,8 +56,8 @@
     <ClCompile Include="C:\KamataEngine\DirectXGame\2d\ImGuiManager.cpp">
       <Filter>KamataEngine</Filter>
     </ClCompile>
-    <ClCompile Include="Bezier.cpp">
-      <Filter>KamataEngine\Source\Bezier</Filter>
+    <ClCompile Include="Excellence.cpp">
+      <Filter>KamataEngine\Source\Excellence</Filter>
     </ClCompile>
     <ClCompile Include="MT.cpp">
       <Filter>KamataEngine\Source\MT</Filter>
@@ -126,8 +132,8 @@
     <ClInclude Include="C:\KamataEngine\DirectXGame\math\Vector3.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\math\Vector4.h" />
     <ClInclude Include="C:\KamataEngine\DirectXGame\2d\ImGuiManager.h" />
-    <ClInclude Include="Bezier.h">
-      <Filter>KamataEngine\ヘッダー\Bezier</Filter>
+    <ClInclude Include="Excellence.h">
+      <Filter>KamataEngine\ヘッダー\Excellence</Filter>
     </ClInclude>
     <ClInclude Include="MT.h">
       <Filter>KamataEngine\ヘッダー\MT</Filter>
