@@ -38,7 +38,7 @@ Excellence::Excellence()
 	isLoad = false;
 	
 	block1.size = { 300,50 };
-	block1.pos = { kWindowWidth / 2 - block1.size.x / 2,600 };
+	block1.pos = { 0 ,700 };
 
 	count = 0;
 	countNum = 1;
@@ -57,7 +57,7 @@ Excellence::Excellence()
 
 	P01, P12, P02 = {};
 
-	textureHandle = Novice::LoadTexture("./Resource./ball.png");
+	textureHandle = Novice::LoadTexture("./Resource./yuu.png");
 
 	//制御点の距離を調整する値
 	midAdjustValue = 1.0f;
@@ -464,20 +464,6 @@ void Excellence::Move() {
 }
 
 void Excellence::Draw() {
-	
-	//ホーミング弾
-	for (int i = 0; i < EXCELLENCEHOMINGMAX; i++) {
-		if (homing[i].isLaserActive) {
-			Novice::DrawEllipse(homing[i].x, homing[i].y, 20, 20, 0, RED, kFillModeSolid);
-			/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, RED);*/
-		}
-		if (homing2[i].isLaserActive) {
-			Novice::DrawEllipse(homing2[i].x, homing2[i].y, 20, 20, 0, RED, kFillModeSolid);
-			/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, RED);*/
-		}
-	}
-	
-
 	//残像
 	for (int i = 0; i < EXCELLENCEHOMINGTRAILMAX; i++) {
 		if (isHomingTrail[i]) {
@@ -486,6 +472,17 @@ void Excellence::Draw() {
 		}
 	}
 
+	//ホーミング弾
+	for (int i = 0; i < EXCELLENCEHOMINGMAX; i++) {
+		if (homing[i].isLaserActive) {
+			/*Novice::DrawEllipse(homing[i].x, homing[i].y, 20, 20, 0, RED, kFillModeSolid);*/
+			Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, BLUE);
+		}
+		if (homing2[i].isLaserActive) {
+		    /*Novice::DrawEllipse(homing2[i].x, homing2[i].y, 20, 20, 0, RED, kFillModeSolid);*/
+			Novice::DrawSprite(homing2[i].x + 5, homing2[i].y + 5, textureHandle, 1, 1, 0, BLUE);
+		}
+	}
 	
 	
 	Novice::DrawEllipse(player.x, player.y, size, size, 0, WHITE, kFillModeSolid);//自機表示

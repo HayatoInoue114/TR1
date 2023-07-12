@@ -35,6 +35,9 @@
     <Filter Include="KamataEngine\ヘッダー\Prodigy">
       <UniqueIdentifier>{86aca06d-2616-4278-883f-f746b771e322}</UniqueIdentifier>
     </Filter>
+    <Filter Include="KamataEngine\MyClass">
+      <UniqueIdentifier>{5a2c1eaa-3336-40f1-b491-1068bc962b5c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="C:\KamataEngine\DirectXGame\base\DirectXCommon.cpp">
@@ -61,6 +64,15 @@
     </ClCompile>
     <ClCompile Include="MT.cpp">
       <Filter>KamataEngine\Source\MT</Filter>
+    </ClCompile>
+    <ClCompile Include="GameManager.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Underachiever.cpp">
+      <Filter>KamataEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Prodigy.cpp">
+      <Filter>KamataEngine\Source\Prodigy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -137,6 +149,11 @@
     </ClInclude>
     <ClInclude Include="MT.h">
       <Filter>KamataEngine\ヘッダー\MT</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Underachiever.h" />
+    <ClInclude Include="Prodigy.h">
+      <Filter>KamataEngine\ヘッダー\Prodigy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

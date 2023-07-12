@@ -38,7 +38,7 @@ Prodigy::Prodigy()
 	isLoad = false;
 
 	block1.size = { 300,50 };
-	block1.pos = { kWindowWidth / 2 - block1.size.x / 2,600 };
+	block1.pos = { 0 ,700 };
 
 	count = 0;
 	countNum = 1;
@@ -57,7 +57,7 @@ Prodigy::Prodigy()
 
 	P01, P12, P02 = {};
 
-	textureHandle = Novice::LoadTexture("./Resource./ball.png");
+	textureHandle = Novice::LoadTexture("./Resource./syu.png");
 	midAdjustValue = 0.6f;
 	endAdjustValue = 1.3f;
 }
@@ -392,12 +392,12 @@ void Prodigy::Draw() {
 	//ホーミング弾
 	for (int i = 0; i < PRODIGYHOMINGMAX; i++) {
 		if (homing[i].isLaserActive) {
-			Novice::DrawEllipse(homing[i].x, homing[i].y, 20, 20, 0, RED, kFillModeSolid);
-			/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, RED);*/
+			/*Novice::DrawEllipse(homing[i].x, homing[i].y, 20, 20, 0, RED, kFillModeSolid);*/
+			Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, GREEN);
 		}
 		if (homing2[i].isLaserActive) {
-			Novice::DrawEllipse(homing2[i].x, homing2[i].y, 20, 20, 0, RED, kFillModeSolid);
-			/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, RED);*/
+			/*Novice::DrawEllipse(homing2[i].x, homing2[i].y, 20, 20, 0, RED, kFillModeSolid);*/
+			Novice::DrawSprite(homing2[i].x, homing2[i].y, textureHandle, 1, 1, 0, GREEN);
 		}
 	}
 
