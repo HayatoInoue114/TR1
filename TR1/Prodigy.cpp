@@ -4,8 +4,8 @@
 Prodigy::Prodigy()
 {
 	//自機座標
-	player.x = kWindowWidth / 2;
-	player.y = 200;
+	player.x = kWindowWidth / 4;
+	player.y = 500;
 
 	//変数初期化
 	for (int i = 0; i < PRODIGYHOMINGMAX; i++)
@@ -183,55 +183,56 @@ void Prodigy::Move() {
 	}*/
 
 	//1個目の軌道/////////////////////////////////////////
-	for (int i = 0; i < PRODIGYHOMINGMAX; i++)
-	{
-
-		if (homing[i].isLaserActive)
+	if (Novice::CheckHitKey(DIK_UP) || Novice::CheckHitKey(DIK_DOWN) || Novice::CheckHitKey(DIK_RIGHT) || Novice::CheckHitKey(DIK_LEFT)) {
+		for (int i = 0; i < PRODIGYHOMINGMAX; i++)
 		{
-			{//ベジェ曲線を描画
-				homing[i].t = (1.0f / homing[i].DivNum) * homing[i].Counter * homing[i].easingAdjustValue;
 
-				P01.x = (1.0f - homing[i].t) * homing[i].startPoint.x + homing[i].t * homing[i].midPoint.x;
-				P01.y = (1.0f - homing[i].t) * homing[i].startPoint.y + homing[i].t * homing[i].midPoint.y;
+			if (homing[i].isLaserActive)
+			{
+				{//ベジェ曲線を描画
+					homing[i].t = (1.0f / homing[i].DivNum) * homing[i].Counter * homing[i].easingAdjustValue;
 
-				P12.x = (1.0f - homing[i].t) * homing[i].midPoint.x + homing[i].t * homing[i].endPoint.x;
-				P12.y = (1.0f - homing[i].t) * homing[i].midPoint.y + homing[i].t * homing[i].endPoint.y;
+					P01.x = (1.0f - homing[i].t) * homing[i].startPoint.x + homing[i].t * homing[i].midPoint.x;
+					P01.y = (1.0f - homing[i].t) * homing[i].startPoint.y + homing[i].t * homing[i].midPoint.y;
 
-
-				P02.x = (1.0f - homing[i].t) * P01.x + homing[i].t * P12.x;
-				P02.y = (1.0f - homing[i].t) * P01.y + homing[i].t * P12.y;
-
-
-				homing[i].x = (int)P02.x;
-				homing[i].y = (int)P02.y;
-
-				homing[i].Counter++;
+					P12.x = (1.0f - homing[i].t) * homing[i].midPoint.x + homing[i].t * homing[i].endPoint.x;
+					P12.y = (1.0f - homing[i].t) * homing[i].midPoint.y + homing[i].t * homing[i].endPoint.y;
 
 
+					P02.x = (1.0f - homing[i].t) * P01.x + homing[i].t * P12.x;
+					P02.y = (1.0f - homing[i].t) * P01.y + homing[i].t * P12.y;
 
-				// もしカウンターが分割数に達していたら０に戻す
-				if (homing[i].t >= 1.0f)
-				{
-					homing[i].Counter = 0;
-					isSecond = true;
-					homing[i].isLaserActive = false;//存在を無くす
-				}
+
+					homing[i].x = (int)P02.x;
+					homing[i].y = (int)P02.y;
+
+					homing[i].Counter++;
 
 
 
-				for (int j = 0; j < PRODIGYHOMINGTRAILMAX; j++) {
-					if (count % countNum == 0 && !isHomingTrail[j]) {
-						homingTrail[j].x = homing[i].x;
-						homingTrail[j].y = homing[i].y;
-						isHomingTrail[j] = true;
-						break;
+					// もしカウンターが分割数に達していたら０に戻す
+					if (homing[i].t >= 1.0f)
+					{
+						homing[i].Counter = 0;
+						isSecond = true;
+						homing[i].isLaserActive = false;//存在を無くす
 					}
 
+
+
+					for (int j = 0; j < PRODIGYHOMINGTRAILMAX; j++) {
+						if (count % countNum == 0 && !isHomingTrail[j]) {
+							homingTrail[j].x = homing[i].x;
+							homingTrail[j].y = homing[i].y;
+							isHomingTrail[j] = true;
+							break;
+						}
+
+					}
 				}
 			}
 		}
 	}
-
 
 	///////////////////////2個目の軌道/////////////////////////////////////////
 	for (int i = 0; i < PRODIGYHOMINGMAX; i++)

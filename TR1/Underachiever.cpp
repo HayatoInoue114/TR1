@@ -4,8 +4,8 @@
 Underachiever::Underachiever()
 {
 	//自機座標
-	player.x = kWindowWidth / 2;
-	player.y = 200;
+	player.x = kWindowWidth /4;
+	player.y = 500;
 
 	//変数初期化
 	for (int i = 0; i < UNDERCHIEVERHOMINGMAX; i++)
@@ -154,7 +154,7 @@ void Underachiever::Move() {
 			//赤のベジェ曲線の計算
 			for (int j = 0; j < DivNum; j++)
 			{
-				homing[i].t = (1.0f / homing[i].DivNum) * homing[i].Counter2 * (1.0f / homing[i].DivNum) * homing[i].Counter2 * (1.0f / homing[i].DivNum) * homing[i].Counter2 * (1.0f / homing[i].DivNum) * homing[i].Counter2;
+				homing[i].t = (1.0f / homing[i].DivNum) * homing[i].Counter2 * (1.0f / homing[i].DivNum) * homing[i].Counter2 * (1.0f / homing[i].DivNum) * homing[i].Counter2 * (1.0f / homing[i].DivNum) * homing[i].Counter2 ;
 
 				P01.x = (1.0f - homing[i].t) * homing[i].startPoint.x + homing[i].t * homing[i].midPoint.x;
 				P01.y = (1.0f - homing[i].t) * homing[i].startPoint.y + homing[i].t * homing[i].midPoint.y;
@@ -182,101 +182,101 @@ void Underachiever::Move() {
 		}
 	}
 
-
-	for (int i = 0; i < UNDERCHIEVERHOMINGMAX; i++)
-	{
-
-		if (homing[i].isLaserActive)
+	if (Novice::CheckHitKey(DIK_UP) || Novice::CheckHitKey(DIK_DOWN) || Novice::CheckHitKey(DIK_RIGHT) || Novice::CheckHitKey(DIK_LEFT)) {
+		for (int i = 0; i < UNDERCHIEVERHOMINGMAX; i++)
 		{
-			{//ベジェ曲線を描画
-				homing[i].t = (1.0f / homing[i].DivNum) * homing[i].Counter * (1.0f / homing[i].DivNum) * homing[i].Counter * (1.0f / homing[i].DivNum) * homing[i].Counter * (1.0f / homing[i].DivNum) * homing[i].Counter;
 
-				P01.x = (1.0f - homing[i].t) * homing[i].startPoint.x + homing[i].t * homing[i].midPoint.x;
-				P01.y = (1.0f - homing[i].t) * homing[i].startPoint.y + homing[i].t * homing[i].midPoint.y;
+			if (homing[i].isLaserActive)
+			{
+				{//ベジェ曲線を描画
+					homing[i].t = (1.0f / homing[i].DivNum) * homing[i].Counter * (1.0f / homing[i].DivNum) * homing[i].Counter * (1.0f / homing[i].DivNum) * homing[i].Counter * (1.0f / homing[i].DivNum) * homing[i].Counter;
 
-				P12.x = (1.0f - homing[i].t) * homing[i].midPoint.x + homing[i].t * homing[i].endPoint.x;
-				P12.y = (1.0f - homing[i].t) * homing[i].midPoint.y + homing[i].t * homing[i].endPoint.y;
+					P01.x = (1.0f - homing[i].t) * homing[i].startPoint.x + homing[i].t * homing[i].midPoint.x;
+					P01.y = (1.0f - homing[i].t) * homing[i].startPoint.y + homing[i].t * homing[i].midPoint.y;
 
-
-				P02.x = (1.0f - homing[i].t) * P01.x + homing[i].t * P12.x; P02.y = (1.0f - homing[i].t) * P01.y + homing[i].t * P12.y;
-
-
-				homing[i].x = (int)P02.x;
-				homing[i].y = (int)P02.y;
+					P12.x = (1.0f - homing[i].t) * homing[i].midPoint.x + homing[i].t * homing[i].endPoint.x;
+					P12.y = (1.0f - homing[i].t) * homing[i].midPoint.y + homing[i].t * homing[i].endPoint.y;
 
 
-				/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);*/
-
-				homing[i].Counter++;
+					P02.x = (1.0f - homing[i].t) * P01.x + homing[i].t * P12.x; P02.y = (1.0f - homing[i].t) * P01.y + homing[i].t * P12.y;
 
 
+					homing[i].x = (int)P02.x;
+					homing[i].y = (int)P02.y;
 
-				// もしカウンターが分割数に達していたら０に戻す
-				if (homing[i].Counter == homing[i].DivNum && !isSecond)
-				{
-					homing[i].Counter = 0;
-					homing[i].isLaserActive = false;//存在を無くす
-				}
+
+					/*Novice::DrawSprite(homing[i].x, homing[i].y, textureHandle, 1, 1, 0, WHITE);*/
+
+					homing[i].Counter++;
 
 
 
-
-				if (!isSecond) {
-					if (block1.pos.y > 320) {
-						homing[i].endPoint.x = 1280;
-						homing[i].endPoint.y = 0;
-					}
-					if (block1.pos.y < 320) {
-						homing[i].endPoint.x = 1280;
-						homing[i].endPoint.y = 720;
-					}
-				}
-				else {
-					homing[i].endPoint.x = player.x;
-					homing[i].endPoint.y = player.y - 30;
-				}
-
-
-				for (int j = 0; j < UNDERCHIEVERHOMINGTRAILMAX; j++) {
-					if (count % countNum == 0 && !isHomingTrail[j]) {
-						homingTrail[j].x = homing[i].x;
-						homingTrail[j].y = homing[i].y;
-						isHomingTrail[j] = true;
-						break;
+					// もしカウンターが分割数に達していたら０に戻す
+					if (homing[i].Counter == homing[i].DivNum && !isSecond)
+					{
+						homing[i].Counter = 0;
+						homing[i].isLaserActive = false;//存在を無くす
 					}
 
+
+
+
+					if (!isSecond) {
+						if (block1.pos.y > 320) {
+							homing[i].endPoint.x = 1280;
+							homing[i].endPoint.y = 0;
+						}
+						if (block1.pos.y < 320) {
+							homing[i].endPoint.x = 1280;
+							homing[i].endPoint.y = 720;
+						}
+					}
+					else {
+						homing[i].endPoint.x = player.x;
+						homing[i].endPoint.y = player.y - 30;
+					}
+
+
+					for (int j = 0; j < UNDERCHIEVERHOMINGTRAILMAX; j++) {
+						if (count % countNum == 0 && !isHomingTrail[j]) {
+							homingTrail[j].x = homing[i].x;
+							homingTrail[j].y = homing[i].y;
+							isHomingTrail[j] = true;
+							break;
+						}
+
+					}
+
+
+
+
+
 				}
-
-
-
-
-
 			}
+
+			if (isSecond) {
+				homing[i].x = 0;
+				homing[i].y = 0;
+				homing[i].t = 0;
+				homing[i].Counter = 0;
+				homing[i].Counter2 = 0;
+				homing[i].DivNum = 500;
+				homing[i].startPoint.x = player.x;
+				homing[i].startPoint.y = player.y + 5;
+				if (player.x >= homing[i].startPoint.x) {
+					homing[i].midPoint.x = player.x + 100;
+				}
+				if (player.x <= homing[i].startPoint.x) {
+					homing[i].midPoint.x = player.x - 100;
+				}
+				homing[i].midPoint.y = player.y - 10;
+				homing[i].endPoint.x = player.x;
+				homing[i].endPoint.y = player.y - 30;
+				homing[i].isLaserActive = true;
+			}
+
 		}
-
-		if (isSecond) {
-			homing[i].x = 0;
-			homing[i].y = 0;
-			homing[i].t = 0;
-			homing[i].Counter = 0;
-			homing[i].Counter2 = 0;
-			homing[i].DivNum = 500;
-			homing[i].startPoint.x = player.x;
-			homing[i].startPoint.y = player.y + 5;
-			if (player.x >= homing[i].startPoint.x) {
-				homing[i].midPoint.x = player.x + 100;
-			}
-			if (player.x <= homing[i].startPoint.x) {
-				homing[i].midPoint.x = player.x - 100;
-			}
-			homing[i].midPoint.y = player.y - 10;
-			homing[i].endPoint.x = player.x;
-			homing[i].endPoint.y = player.y - 30;
-			homing[i].isLaserActive = true;
-		}
-
 	}
-
 
 	for (int j = 0; j < UNDERCHIEVERHOMINGTRAILMAX; j++) {
 		if (isHomingTrail[j]) {

@@ -4,8 +4,8 @@
 Excellence::Excellence()
 {
 	//自機座標
-	player.x = kWindowWidth / 2;
-	player.y = 200;
+	player.x = kWindowWidth / 4;
+	player.y = 500;
 
 	//変数初期化
 	for (int i = 0; i < EXCELLENCEHOMINGMAX; i++)
@@ -201,59 +201,60 @@ void Excellence::Move() {
 
 
 	//1個目の軌道/////////////////////////////////////////
-	for (int i = 0; i < EXCELLENCEHOMINGMAX; i++)
-	{
-		
-
-		if (homing[i].isLaserActive)
+	if (Novice::CheckHitKey(DIK_UP) || Novice::CheckHitKey(DIK_DOWN) || Novice::CheckHitKey(DIK_RIGHT) || Novice::CheckHitKey(DIK_LEFT)) {
+		for (int i = 0; i < EXCELLENCEHOMINGMAX; i++)
 		{
-			prePlayer = player;
-			{//ベジェ曲線を描画
-				homing[i].t = (1.0f / homing[i].DivNum) * homing[i].Counter * homing[i].easingAdjustValue;
-
-				P01.x = (1.0f - homing[i].t) * homing[i].startPoint.x + homing[i].t * homing[i].midPoint.x; 
-				P01.y = (1.0f - homing[i].t) * homing[i].startPoint.y + homing[i].t * homing[i].midPoint.y;
-
-				P12.x = (1.0f - homing[i].t) * homing[i].midPoint.x + homing[i].t * homing[i].endPoint.x; 
-				P12.y = (1.0f - homing[i].t) * homing[i].midPoint.y + homing[i].t * homing[i].endPoint.y;
 
 
-				P02.x = (1.0f - homing[i].t) * P01.x + homing[i].t * P12.x;
-				P02.y = (1.0f - homing[i].t) * P01.y + homing[i].t * P12.y;
+			if (homing[i].isLaserActive)
+			{
+				prePlayer = player;
+				{//ベジェ曲線を描画
+					homing[i].t = (1.0f / homing[i].DivNum) * homing[i].Counter * homing[i].easingAdjustValue;
+
+					P01.x = (1.0f - homing[i].t) * homing[i].startPoint.x + homing[i].t * homing[i].midPoint.x;
+					P01.y = (1.0f - homing[i].t) * homing[i].startPoint.y + homing[i].t * homing[i].midPoint.y;
+
+					P12.x = (1.0f - homing[i].t) * homing[i].midPoint.x + homing[i].t * homing[i].endPoint.x;
+					P12.y = (1.0f - homing[i].t) * homing[i].midPoint.y + homing[i].t * homing[i].endPoint.y;
 
 
-				homing[i].x = (int)P02.x;
-				homing[i].y = (int)P02.y;
-
-				homing[i].Counter++;
+					P02.x = (1.0f - homing[i].t) * P01.x + homing[i].t * P12.x;
+					P02.y = (1.0f - homing[i].t) * P01.y + homing[i].t * P12.y;
 
 
+					homing[i].x = (int)P02.x;
+					homing[i].y = (int)P02.y;
 
-				// もしtが1になったら0に戻す
-				if (homing[i].t >= 1.0f)
-				{
-
-					homing[i].Counter = 0;
-					isSecond = true;//2個目の軌道のフラグを立てる
-					homing[i].isLaserActive = false;//存在を無くす
-					isAround = false;//ここで周回フラグを折る
-				}
-			
+					homing[i].Counter++;
 
 
-				for (int j = 0; j < EXCELLENCEHOMINGTRAILMAX; j++) {
-					if (count % countNum == 0 && !isHomingTrail[j]) {
-						homingTrail[j].x = homing[i].x;
-						homingTrail[j].y = homing[i].y;
-						isHomingTrail[j] = true;
-						break;
+
+					// もしtが1になったら0に戻す
+					if (homing[i].t >= 1.0f)
+					{
+
+						homing[i].Counter = 0;
+						isSecond = true;//2個目の軌道のフラグを立てる
+						homing[i].isLaserActive = false;//存在を無くす
+						isAround = false;//ここで周回フラグを折る
 					}
 
+
+
+					for (int j = 0; j < EXCELLENCEHOMINGTRAILMAX; j++) {
+						if (count % countNum == 0 && !isHomingTrail[j]) {
+							homingTrail[j].x = homing[i].x;
+							homingTrail[j].y = homing[i].y;
+							isHomingTrail[j] = true;
+							break;
+						}
+
+					}
 				}
 			}
 		}
 	}
-
 
 	///////////////////////2個目の軌道/////////////////////////////////////////
 	for (int i = 0; i < EXCELLENCEHOMINGMAX; i++)
